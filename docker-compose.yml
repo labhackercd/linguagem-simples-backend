@@ -10,10 +10,9 @@ services:
       - pg_data:/var/lib/postgresql/data/
   backend:
     container_name: linguagem_simples-backend
-    build: .
+    image: labhackercd/linguagem_simples_backend:latest
     command: ./start_backend.sh
     restart: on-failure
-    user: root
     env_file:
       - ./src/linguagem_simples_backend/.env
     ports:
