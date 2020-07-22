@@ -1,20 +1,20 @@
 version: "3"
 services:
   db:
-    container_name: linguagem_simples-db
+    container_name: linguagem-simples-db
     image: postgres
     restart: on-failure
     env_file:
-      - ./src/linguagem_simples_backend/.env
+      - ./src/linguagemsimples/.env
     volumes:
       - pg_data:/var/lib/postgresql/data/
   backend:
-    container_name: linguagem_simples-backend
-    image: labhackercd/linguagem_simples_backend:latest
+    container_name: linguagem-simples-backend
+    image: labhackercd/linguagem-simples-backend:latest
     command: ./start_backend.sh
     restart: on-failure
     env_file:
-      - ./src/linguagem_simples_backend/.env
+      - ./src/linguagemsimples/.env
     ports:
       - "8000:8000"
     depends_on:

@@ -5,12 +5,21 @@ python:
 matrix:
   allow_failures:
     - python: 3.8-dev
+sudo: required
 services:
   - docker
-sudo: required
-before_script: pip install docker-compose==1.25.5
+env:
+  - DOCKER_COMPOSE_VERSION=1.25.5
+before_install:
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+  - touch /home/travis/build/labhackercd/linguagem-simples-backend/src/linguagemsimples/.env
 script:
-  - docker-compose run backend sh -c "python manage.py test && flake8"
-  - docker-compose run backend sh -c "coverage run manage.py test"
+  - docker-compose up -d
+  - docker-compose ps
+  - docker-compose exec backend /bin/bash -c "coverage run src/manage.py test"
+  - docker-compose exec backend /bin/bash -c "flake8 src"
 after_success:
   - coveralls
