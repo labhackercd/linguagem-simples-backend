@@ -21,8 +21,6 @@ install:
 script:
 - coverage run src/manage.py test
 - flake8 src
-- docker-compose up --build -d dev
-- docker-compose start dev
-- docker-compose run dev npm test -- --watchAll=false
+- docker-compose up
 after_success:
 - coveralls
