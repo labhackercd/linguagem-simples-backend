@@ -13,6 +13,7 @@ services:
     build: .
     command: ./start_backend.sh
     restart: on-failure
+    user: root
     env_file:
       - ./src/linguagem_simples_backend/.env
     ports:
