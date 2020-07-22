@@ -1,0 +1,25 @@
+version: "3"
+services:
+  db:
+    container_name: linguagem_simples-db
+    image: postgres
+    restart: on-failure
+    env_file:
+      - ./src/linguagem_simples_backend/.env
+    volumes:
+      - pg_data:/var/lib/postgresql/data/
+  backend:
+    container_name: linguagem_simples-backend
+    build: .
+    command: ./start_backend.sh
+    restart: on-failure
+    env_file:
+      - ./src/linguagem_simples_backend/.env
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+volumes:
+  pg_data:
+    driver: local

@@ -1,0 +1,4 @@
+django==3.0.8
+djangorestframework==3.11.0
+pyjwt==1.7.1
+psycopg2-binary==2.8.5
