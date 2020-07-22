@@ -79,12 +79,12 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.' + config('DATABASE_ENGINE',
                                                  default='sqlite3'),
-        'NAME': config('DATABASE_NAME',
+        'NAME': config('POSTGRES_DB',
                        default=os.path.join(BASE_DIR, 'db.sqlite3')),
-        'USER': config('DATABASE_USER', default=''),
-        'PASSWORD': config('DATABASE_PASSWORD', default=''),
-        'HOST': config('DATABASE_HOST', default=''),
-        'PORT': config('DATABASE_PORT', default=''),
+        'USER': config('POSTGRES_USER', default=''),
+        'PASSWORD': config('POSTGRES_PASSWORD', default=''),
+        'HOST': config('HOST', default=''),
+        'PORT': config('PORT', default=''),
     }
 }
 
