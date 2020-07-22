@@ -1,6 +1,7 @@
 [![Build Status](https://travis-ci.org/labhackercd/linguagem-simples-backend.svg?branch=master)](https://travis-ci.org/labhackercd/linguagem-simples-backend)
-
 [![Coverage Status](https://coveralls.io/repos/github/labhackercd/linguagem-simples-backend/badge.svg?branch=master)](https://coveralls.io/github/labhackercd/linguagem-simples-backend?branch=master)
+[![Maintainability](https://api.codeclimate.com/v1/badges/b9acb360efb6bc65f182/maintainability)](https://codeclimate.com/github/labhackercd/linguagem-simples-backend/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/b9acb360efb6bc65f182/test_coverage)](https://codeclimate.com/github/labhackercd/linguagem-simples-backend/test_coverage)
 
 # linguagem-simples
 Este repositório o projeto Linguagem Simples
