@@ -1,11 +1,18 @@
-version: "3"
+version: "3.4"
+
+x-common-variables: &common-variables
+  POSTGRES_DB: linguagem-simples
+  POSTGRES_USER: root
+  POSTGRES_PASSWORD: linguagem-simples
+
 services:
   db:
     container_name: linguagem-simples-db
     image: postgres
     restart: on-failure
-    env_file:
-      - ./src/linguagemsimples/.env
+    environment:
+      <<: *common-variables
+      PGDATA: "/var/lib/postgresql/data/"
     volumes:
       - pg_data:/var/lib/postgresql/data/
   backend:
@@ -13,8 +20,14 @@ services:
     image: labhackercd/linguagem-simples-backend:latest
     command: ./start_backend.sh
     restart: on-failure
-    env_file:
-      - ./src/linguagemsimples/.env
+    environment:
+      <<: *common-variables
+      SECRET_KEY: "key"
+      DEBUG: "True"
+      ALLOWED_HOSTS: "*"
+      HOST: "db"
+      PORT: 5432
+      DATABASE_ENGINE: "postgresql"
     ports:
       - "8000:8000"
     depends_on:
