@@ -26,7 +26,11 @@ media
 
 # Python # 
 *.py[cod] 
-*$py.class 
+*$py.class
+
+# Pipenv #
+Pipfile
+Pipfile.lock
 
 # Distribution / packaging 
 .Python build/ 

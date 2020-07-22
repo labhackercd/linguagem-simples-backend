@@ -2,3 +2,7 @@ django==3.0.8
 djangorestframework==3.11.0
 pyjwt==1.7.1
 psycopg2-binary==2.8.5
+python-decouple==3.3
+flake8==3.8.3
+coverage==5.2
+python-coveralls==2.9.3
