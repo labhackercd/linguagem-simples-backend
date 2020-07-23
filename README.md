@@ -1,10 +1,10 @@
 [![Build Status](https://travis-ci.org/labhackercd/linguagem-simples-backend.svg?branch=master)](https://travis-ci.org/labhackercd/linguagem-simples-backend)
 [![Coverage Status](https://coveralls.io/repos/github/labhackercd/linguagem-simples-backend/badge.svg?branch=master)](https://coveralls.io/github/labhackercd/linguagem-simples-backend?branch=master)
 [![Maintainability](https://api.codeclimate.com/v1/badges/b9acb360efb6bc65f182/maintainability)](https://codeclimate.com/github/labhackercd/linguagem-simples-backend/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/b9acb360efb6bc65f182/test_coverage)](https://codeclimate.com/github/labhackercd/linguagem-simples-backend/test_coverage)
 
-# linguagem-simples
-Este repositório o projeto Linguagem Simples
+
+# Linguagem Simples Backend
+Este repositório contém o código referente ao backend da aplicação Linguagem Simples. Para mais informações sobre a ferramenta acesse a nossa [wiki](https://github.com/labhackercd/linguagem-simples-backend/wiki). Na wiki é possível ter acesso a toda documentação que explica questões de negócio bem como questões técnicas do projeto.
 
 
 # Como iniciar o projeto?
@@ -14,7 +14,7 @@ Este repositório o projeto Linguagem Simples
 * [Docker](https://docs.docker.com/engine/install/) versão 19.03.6
 * [Docker-Compose](https://docs.docker.com/compose/install/) versão 1.25.5
 
-Caso deseje alterar as variáveis de ambiente é necessário criar um arquivo com o nome .env na pasta em que se encontra o arquivo settings.py. É possível alterar as
+Caso deseje alterar as variáveis de ambiente é necessário alterar as variáveis que estão no **docker_compose.yml**. É possível alterar as
 seguintes variáveis:
 
 ```bash
