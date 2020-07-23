@@ -18,7 +18,6 @@ before_install:
 script:
   - docker-compose up -d
   - docker-compose ps
-  - docker-compose exec backend /bin/bash -c "coverage run src/manage.py test"
-  - docker-compose exec backend /bin/bash -c "flake8 src"
+  - docker-compose run backend sh -c "coverage run src/manage.py test && flake8 src && coverage report"
 after_success:
-  - coveralls
+  - docker-compose run backend sh -c "coverage run src/manage.py test && TRAVIS_JOB_ID=$TRAVIS_JOB_ID TRAVIS_BRANCH=$TRAVIS_BRANCH COVERALLS_REPO_TOKEN=$COVERALLS_REPO_TOKEN coveralls"
