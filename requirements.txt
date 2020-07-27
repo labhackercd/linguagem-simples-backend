@@ -8,3 +8,6 @@ coverage==5.2
 coveralls==2.1.1
 djangorestframework-simplejwt==4.4.0
 drf-yasg==1.17.1
+pytest-django==3.9.0
+pytest-cov==2.10.0
+mixer==6.1.3
