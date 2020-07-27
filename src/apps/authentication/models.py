@@ -1,4 +1,4 @@
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
@@ -8,7 +8,8 @@ class CustomUser(AbstractUser):
         ('editor', _('editor')),
     )
 
-    profile = models.CharField(choices=PROFILE_CHOICES, max_length=120)
+    profile = models.CharField(choices=PROFILE_CHOICES, max_length=120,
+                               default='editor')
 
     class Meta:
         verbose_name = _('user')
