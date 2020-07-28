@@ -1,5 +1,6 @@
 import pytest
 from mixer.backend.django import mixer
+from datetime import datetime
 
 from .models import PlenarySession
 
@@ -14,6 +15,14 @@ def test_apps():
 def test_plenary_session_create():
     mixer.blend(PlenarySession)
     assert PlenarySession.objects.count() == 1
+
+
+@pytest.mark.django_db
+def test_plenary_session_str():
+    plenary_session = mixer.blend(PlenarySession, date=datetime.now(),
+                                  type_session='virtual')
+    assert plenary_session.__str__() == 'virtual - ' + \
+        datetime.now().strftime("%d/%m/%Y")
 
 
 @pytest.mark.django_db
