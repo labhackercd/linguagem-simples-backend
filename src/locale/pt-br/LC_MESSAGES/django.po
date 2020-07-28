@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-27 11:27-0300\n"
+"POT-Creation-Date: 2020-07-28 10:22-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,10 +21,50 @@ msgstr ""
 msgid "editor"
 msgstr "editor"
 
-#: apps/authentication/models.py:14
+#: apps/authentication/models.py:15
 msgid "user"
 msgstr "usuário"
 
-#: apps/authentication/models.py:15
+#: apps/authentication/models.py:16
 msgid "users"
 msgstr "usuários"
+
+#: apps/plenary_session/models.py:6
+msgid "plenary"
+msgstr "Plenário"
+
+#: apps/plenary_session/models.py:7
+msgid "virtual session"
+msgstr "Sessão virtual"
+
+#: apps/plenary_session/models.py:8
+msgid "presential session"
+msgstr "Sessão presencial"
+
+#: apps/plenary_session/models.py:10
+msgid "pré session"
+msgstr "Pré sessão"
+
+#: apps/plenary_session/models.py:11
+msgid "started session"
+msgstr "Sessão iniciada"
+
+#: apps/plenary_session/models.py:12
+msgid "started votation"
+msgstr "Votação iniciada"
+
+#: apps/plenary_session/models.py:13
+msgid "next topic"
+msgstr "Próxima pauta"
+
+#: apps/plenary_session/models.py:14
+msgid "closed session"
+msgstr "Sessão encerrada"
+
+#: apps/plenary_session/models.py:25
+msgid "plenary session"
+msgstr "Sessão de plenário"
+
+#: apps/plenary_session/models.py:26
+msgid "plenary sessions"
+msgstr "Sessões de plenário"
