@@ -26,6 +26,12 @@ def test_plenary_session_str():
 
 
 @pytest.mark.django_db
+def test_plenary_session_create_erro_user():
+    with pytest.raises(Exception):
+        mixer.blend(PlenarySession, author=2)
+
+
+@pytest.mark.django_db
 def test_plenary_session_create_erro_location():
     with pytest.raises(Exception):
         plenary_session = mixer.blend(PlenarySession, location='ERROR')
@@ -58,6 +64,12 @@ def test_plenary_session_create_erro_resume():
     with pytest.raises(Exception):
         plenary_session = mixer.blend(PlenarySession, resume='')
         plenary_session.full_clean()
+
+
+@pytest.mark.django_db
+def test_plenary_session_create_none_author():
+    with pytest.raises(Exception):
+        mixer.blend(PlenarySession, author=None)
 
 
 @pytest.mark.django_db

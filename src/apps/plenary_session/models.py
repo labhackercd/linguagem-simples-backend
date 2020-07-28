@@ -1,8 +1,14 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.conf import settings
 
 
 class PlenarySession(models.Model):
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.PROTECT,
+        related_name="plenary_sessions"
+    )
     list_location = [('plenary', _('plenary'))]
     list_type_session = [('virtual', _('virtual session')),
                          ('presential', _('presential session'))
