@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'drf_yasg',
 
     'apps.authentication',
+    'apps.plenary_session'
 ]
 
 MIDDLEWARE = [
