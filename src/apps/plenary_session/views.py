@@ -1,7 +1,5 @@
 from rest_framework import viewsets
-from rest_framework.permissions import (
-    IsAuthenticatedOrReadOnly,
-    IsAuthenticated)
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from .models import PlenarySession, Publication
 from .serializers import PlenarySessionSerializer, PublicationSerializer
 
