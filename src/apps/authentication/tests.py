@@ -1,7 +1,7 @@
 import pytest
 import json
 from mixer.backend.django import mixer
-from apps.authentication.models import CustomUser
+from django.contrib.auth import get_user_model
 from django.urls import reverse
 
 
@@ -18,7 +18,7 @@ def test_password():
 
 @pytest.fixture
 def get_jwt_response(api_client, test_password):
-    user = mixer.blend(CustomUser)
+    user = mixer.blend(get_user_model())
     user.set_password(test_password)
     user.save()
     data = {
@@ -32,8 +32,8 @@ def get_jwt_response(api_client, test_password):
 
 @pytest.mark.django_db
 def test_user_models():
-    user = mixer.blend(CustomUser, username='joao')
-    assert CustomUser.objects.count() == 1
+    user = mixer.blend(get_user_model(), username='joao')
+    assert get_user_model().objects.count() == 1
     assert user.__str__() == 'joao'
 
 
