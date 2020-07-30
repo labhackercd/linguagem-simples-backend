@@ -4,6 +4,8 @@ from apps.authentication.serializers import UserSerializer
 
 
 class PlenarySessionSerializer(serializers.ModelSerializer):
+    author = UserSerializer(read_only=True)
+
     class Meta:
         model = PlenarySession
         fields = '__all__'
