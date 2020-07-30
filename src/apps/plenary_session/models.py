@@ -13,7 +13,7 @@ class TimestampedMixin(models.Model):
         abstract = True
 
 
-class PlenarySession(models.Model):
+class PlenarySession(TimestampedMixin):
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.PROTECT,

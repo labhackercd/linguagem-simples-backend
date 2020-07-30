@@ -44,12 +44,6 @@ def test_plenary_session_str():
 
 
 @pytest.mark.django_db
-def test_plenary_session_create_erro_user():
-    with pytest.raises(Exception):
-        mixer.blend(PlenarySession, author=2)
-
-
-@pytest.mark.django_db
 def test_plenary_session_create_erro_location():
     with pytest.raises(Exception):
         plenary_session = mixer.blend(PlenarySession, location='ERROR')
@@ -85,12 +79,6 @@ def test_plenary_session_create_erro_resume():
 
 
 @pytest.mark.django_db
-def test_plenary_session_create_none_author():
-    with pytest.raises(Exception):
-        mixer.blend(PlenarySession, author=None)
-
-
-@pytest.mark.django_db
 def test_plenary_session_create_none_location():
     with pytest.raises(Exception):
         mixer.blend(PlenarySession, location=None)
@@ -119,6 +107,64 @@ def test_plenary_session_create_none_situation_session():
 def test_plenary_session_create_none_resume():
     with pytest.raises(Exception):
         mixer.blend(PlenarySession, resume=None)
+
+
+@pytest.mark.django_db
+def test_session_plenary_create_url(api_client, get_or_create_token):
+    data = {'location': 'plenary',
+            'date': datetime.today().strftime('%Y-%m-%d'),
+            'type_session': 'virtual',
+            'situation_session': 'pre_session',
+            'resume': 'Resume of session'}
+    url = reverse('sessions-list')
+    api_client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(
+        get_or_create_token))
+    response = api_client.post(url, data=data)
+    request = json.loads(response.content)
+    assert response.status_code == 201
+    assert request['location'] == 'plenary'
+    assert request['date'] == datetime.now().strftime('%Y-%m-%d')
+    assert request['type_session'] == 'virtual'
+    assert request['situation_session'] == 'pre_session'
+    assert request['resume'] == 'Resume of session'
+
+
+@pytest.mark.django_db
+def test_session_plenary_detail_url(api_client, get_or_create_token):
+    plenary_session = mixer.blend(PlenarySession)
+    url = reverse('sessions-detail', args=[plenary_session.id])
+    data = {'situation_session': 'closed_session'}
+    api_client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(
+        get_or_create_token))
+    response = api_client.patch(url, data=data)
+    request = json.loads(response.content)
+    assert response.status_code == 200
+    assert request['id'] == plenary_session.id
+
+
+@pytest.mark.django_db
+def test_session_plenary_update_url(api_client, get_or_create_token):
+    plenary_session = mixer.blend(PlenarySession,
+                                  situation_session='pre_session')
+    url = reverse('sessions-detail', args=[plenary_session.id])
+    data = {'situation_session': 'closed_session'}
+    api_client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(
+        get_or_create_token))
+    response = api_client.patch(url, data=data)
+    request = json.loads(response.content)
+    assert response.status_code == 200
+    assert request['situation_session'] == 'closed_session'
+
+
+@pytest.mark.django_db
+def test_session_plenary_delete_url(api_client, get_or_create_token):
+    plenary_session = mixer.blend(PlenarySession)
+    url = reverse('sessions-detail', args=[plenary_session.id])
+    api_client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(
+        get_or_create_token))
+    response = api_client.delete(url)
+    assert response.status_code == 204
+    assert PlenarySession.objects.count() == 0
 
 
 @pytest.mark.django_db
