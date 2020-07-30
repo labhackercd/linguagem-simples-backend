@@ -4,7 +4,7 @@
 
 
 # Linguagem Simples Backend
-Este repositório contém o código referente ao backend da aplicação Linguagem Simples. Para mais informações sobre a ferramenta acesse a nossa [wiki](https://github.com/labhackercd/linguagem-simples-backend/wiki). Na wiki é possível ter acesso a toda documentação que explica questões de negócio bem como questões técnicas do projeto.
+Este repositório contém o código referente ao backend da aplicação Linguagem Simples. Para mais informações sobre a ferramenta acesse a nossa wiki. Para ter acesso a toda [documentação](https://github.com/labhackercd/linguagem-simples-backend/wiki) que explica questões de negócio bem como questões técnicas do projeto.
 
 
 # Como iniciar o projeto?
@@ -43,6 +43,12 @@ cd linguagem-simples-backend
 3. Execute o comando para iniciar os containers 
 ```bash
 sudo docker-compose up
+```
+
+## Como rodar os testes do projeto
+- Com os contaires(Passo 3) já em execução rode o comando:
+```bash
+sudo docker-compose exec backend sh -c "cd src/ && pytest --cov-report term-missing --cov=apps"
 ```
 
 **A API neste momento já vai estar rodando na porta 8000 do localhost.**
