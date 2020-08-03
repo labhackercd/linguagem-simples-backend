@@ -28,5 +28,6 @@ urlpatterns = [
          name='schema-redoc'),
     path('admin/', admin.site.urls),
     path('api/', include('apps.authentication.urls')),
-    path('api/', include('apps.plenary_session.urls'))
+    path('api/', include('apps.plenary_session.urls')),
+    path('api/', include('apps.api_ditec.urls'))
 ]

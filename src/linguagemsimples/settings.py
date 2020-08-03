@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'corsheaders',
 
     'apps.authentication',
-    'apps.plenary_session'
+    'apps.plenary_session',
+    'apps.api_ditec'
 ]
 
 MIDDLEWARE = [
