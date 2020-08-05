@@ -8,24 +8,23 @@ from .configs_api import (DEFAULT_QUERRY, DATE_QUERRY, SEARCH_QUERRY,
 class ListNews(APIView):
 
     def get(self, request):
-        news = get_news()
+        news = self.get_news()
         return Response(news)
 
+    def get_news(self):
+        url_prefix = 'noticias'
+        querry = DEFAULT_QUERRY.replace('replace_querry', DATE_QUERRY)
+        querry = querry.replace('NW', NUMBER_WEEKS)
 
-def get_news():
-    url_prefix = 'noticias'
-    querry = DEFAULT_QUERRY.replace('replace_querry', DATE_QUERRY)
-    querry = querry.replace('NW', NUMBER_WEEKS)
+        response = requests.request('POST', URL.format(url_prefix),
+                                    headers=HEADERS,
+                                    data=querry)
+        try:
+            response = response.json()
+        except Exception:
+            response = {'error': 'Error not found news'}
 
-    response = requests.request('POST', URL.format(url_prefix),
-                                headers=HEADERS,
-                                data=querry)
-    try:
-        response = response.json()
-    except Exception:
-        response = {'error': 'Error not found news'}
-
-    return response
+        return response
 
 
 class SearchNews(APIView):
@@ -33,24 +32,23 @@ class SearchNews(APIView):
     def get(self, request, format=None):
         words = request.query_params.get('search', None)
         if words:
-            news = get_filter_news(words)
+            news = self.get_filter_news(words)
         else:
             news = {'error': 'It is necessary to pass search'}
         return Response(news)
 
+    def get_filter_news(self, words):
+        url_prefix = 'noticias'
 
-def get_filter_news(words):
-    url_prefix = 'noticias'
+        querry = DEFAULT_QUERRY.replace('replace_querry', SEARCH_QUERRY)
+        querry = querry.replace('words', words)
 
-    querry = DEFAULT_QUERRY.replace('replace_querry', SEARCH_QUERRY)
-    querry = querry.replace('words', words)
+        response = requests.request('POST', URL.format(url_prefix),
+                                    headers=HEADERS,
+                                    data=querry)
+        try:
+            response = response.json()
+        except Exception:
+            response = {'error': 'Error not found news'}
 
-    response = requests.request('POST', URL.format(url_prefix),
-                                headers=HEADERS,
-                                data=querry)
-    try:
-        response = response.json()
-    except Exception:
-        response = {'error': 'Error not found news'}
-
-    return response
+        return response
