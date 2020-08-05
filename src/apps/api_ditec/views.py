@@ -27,6 +27,26 @@ class SearchNews(APIView):
         return Response(subjects)
 
 
+class ListRadioagency(APIView):
+    path = '/radioagencia/_search'
+
+    def get(self, request):
+        subjects = get_subjects(self.path)
+        return Response(subjects)
+
+
+class SearchRadioagency(APIView):
+    path = '/radioagencia/_search'
+
+    def get(self, request, format=None):
+        words = request.query_params.get('search', None)
+        if words:
+            subjects = get_filter_subjects(self.path, words)
+        else:
+            subjects = {'error': _('It is necessary to pass search')}
+        return Response(subjects)
+
+
 def get_subjects(path):
     query = DEFAULT_QUERY.replace('replace_query', DATE_QUERY)
     query = query.replace('NW', NUMBER_WEEKS)
