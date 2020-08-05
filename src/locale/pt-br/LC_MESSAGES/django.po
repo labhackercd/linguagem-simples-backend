@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-28 10:22-0300\n"
+"POT-Creation-Date: 2020-08-05 14:08-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,14 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: apps/api_ditec/views.py:27 apps/api_ditec/views.py:54
+msgid "Error not found news"
+msgstr "Erro, não foram encontradas notícias"
+
+#: apps/api_ditec/views.py:39
+msgid "It is necessary to pass search"
+msgstr "É necessário informar uma palavra para pesquisar"
 
 #: apps/authentication/models.py:8
 msgid "editor"
@@ -29,42 +37,78 @@ msgstr "usuário"
 msgid "users"
 msgstr "usuários"
 
-#: apps/plenary_session/models.py:6
+#: apps/plenary_session/models.py:7
+msgid "created"
+msgstr "criado"
+
+#: apps/plenary_session/models.py:9
+msgid "modified"
+msgstr "modificado"
+
+#: apps/plenary_session/models.py:22
 msgid "plenary"
 msgstr "Plenário"
 
-#: apps/plenary_session/models.py:7
+#: apps/plenary_session/models.py:23
 msgid "virtual session"
 msgstr "Sessão virtual"
 
-#: apps/plenary_session/models.py:8
+#: apps/plenary_session/models.py:24
 msgid "presential session"
 msgstr "Sessão presencial"
 
-#: apps/plenary_session/models.py:10
+#: apps/plenary_session/models.py:26
 msgid "pré session"
 msgstr "Pré sessão"
 
-#: apps/plenary_session/models.py:11
+#: apps/plenary_session/models.py:27
 msgid "started session"
 msgstr "Sessão iniciada"
 
-#: apps/plenary_session/models.py:12
+#: apps/plenary_session/models.py:28
 msgid "started votation"
 msgstr "Votação iniciada"
 
-#: apps/plenary_session/models.py:13
+#: apps/plenary_session/models.py:29
 msgid "next topic"
 msgstr "Próxima pauta"
 
-#: apps/plenary_session/models.py:14
+#: apps/plenary_session/models.py:30
 msgid "closed session"
 msgstr "Sessão encerrada"
 
-#: apps/plenary_session/models.py:25
+#: apps/plenary_session/models.py:41 apps/plenary_session/models.py:62
 msgid "plenary session"
 msgstr "Sessão de plenário"
 
-#: apps/plenary_session/models.py:26
+#: apps/plenary_session/models.py:42
 msgid "plenary sessions"
 msgstr "Sessões de plenário"
+
+#: apps/plenary_session/models.py:50
+msgid "published"
+msgstr "publicado"
+
+#: apps/plenary_session/models.py:51
+msgid "inactive"
+msgstr "inativo"
+
+#: apps/plenary_session/models.py:54
+msgid "state"
+msgstr "estado"
+
+#: apps/plenary_session/models.py:58
+msgid "content"
+msgstr "conteúdo"
+
+#: apps/plenary_session/models.py:66
+msgid "author"
+msgstr "autor"
+
+#: apps/plenary_session/models.py:69
+msgid "publication"
+msgstr "publicação"
+
+#: apps/plenary_session/models.py:70
+msgid "publications"
+msgstr "publicações"

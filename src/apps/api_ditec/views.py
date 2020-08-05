@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from .configs_api import (DEFAULT_QUERY, DATE_QUERY, SEARCH_QUERY,
                           NUMBER_WEEKS, HEADERS)
 from django.conf import settings
+from django.utils.translation import gettext_lazy as _
 
 
 class ListNews(APIView):
@@ -23,7 +24,7 @@ class ListNews(APIView):
         try:
             response = response.json()
         except Exception:
-            response = {'error': 'Error not found news'}
+            response = {'error': _('Error not found news')}
 
         return response
 
@@ -35,7 +36,7 @@ class SearchNews(APIView):
         if words:
             news = self.get_filter_news(words)
         else:
-            news = {'error': 'It is necessary to pass search'}
+            news = {'error': _('It is necessary to pass search')}
         return Response(news)
 
     def get_filter_news(self, words):
@@ -50,6 +51,6 @@ class SearchNews(APIView):
         try:
             response = response.json()
         except Exception:
-            response = {'error': 'Error not found news'}
+            response = {'error': _('Error not found news')}
 
         return response
