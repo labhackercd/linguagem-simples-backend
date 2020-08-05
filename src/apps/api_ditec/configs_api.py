@@ -1,4 +1,3 @@
-URL = 'http://es-hom.camara.gov.br:9200/{}/_search'
 HEADERS = {'Content-Type': 'application/json'}
 
 NUMBER_WEEKS = '4'
