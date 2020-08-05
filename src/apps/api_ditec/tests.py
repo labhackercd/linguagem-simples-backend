@@ -5,7 +5,7 @@ import pytest
 import responses
 from mixer.backend.django import mixer
 from rest_framework_simplejwt.tokens import RefreshToken
-from .views import ListNews, SearchNews
+from .views import get_subjects, get_filter_subjects
 from django.conf import settings
 
 
@@ -31,85 +31,72 @@ def test_name_app():
 @pytest.mark.django_db
 @responses.activate
 def test_news(api_client, get_or_create_token):
+    url = settings.API_DITEC + '/noticias/_search'
     responses.add(responses.POST,
-                  settings.API_DITEC + '/noticias/_search',
+                  url,
                   json={'response': 'json_test'}, status=201)
 
-    url = reverse('news')
+    path = reverse('news')
     api_client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(
         get_or_create_token))
-    response = api_client.get(url)
+    response = api_client.get(path)
 
     assert response.json() == {'response': 'json_test'}
 
     assert len(responses.calls) == 1
-    assert responses.calls[0].request.url == settings.API_DITEC + '/noticias/_search'  # NOQA
+    assert responses.calls[0].request.url == url
 
 
 @pytest.mark.django_db
 @responses.activate
 def test_not_found_news(api_client, get_or_create_token):
+    url = settings.API_DITEC + '/noticias/_search'
     responses.add(responses.POST,
-                  settings.API_DITEC + '/noticias/_search',
+                  url,
                   status=201)
 
-    url = reverse('news')
+    path = reverse('news')
     api_client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(
         get_or_create_token))
-    response = api_client.get(url)
+    response = api_client.get(path)
 
     assert response.json() == {'error': 'Error not found news'}
 
     assert len(responses.calls) == 1
-    assert responses.calls[0].request.url == settings.API_DITEC + '/noticias/_search'  # NOQA
-
-
-@pytest.mark.django_db
-@responses.activate
-def test_get_news(api_client, get_or_create_token):
-    responses.add(responses.POST,
-                  settings.API_DITEC + '/noticias/_search',
-                  json={'response': 'json_test'}, status=201)
-
-    listNews = ListNews()
-
-    response = listNews.get_news()
-
-    assert response == {'response': 'json_test'}
-
-    assert len(responses.calls) == 1
-    assert responses.calls[0].request.url == settings.API_DITEC + '/noticias/_search'  # NOQA
+    assert responses.calls[0].request.url == url
 
 
 @pytest.mark.django_db
 @responses.activate
 def test_search_news(api_client, get_or_create_token):
+    url = settings.API_DITEC + '/noticias/_search'
     responses.add(responses.POST,
-                  settings.API_DITEC + '/noticias/_search',
+                  url,
                   json={'response': 'json_test'}, status=201)
 
-    url = reverse('news-search') + '?search=word'
+    path = reverse('news-search') + '?search=word'
     api_client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(
         get_or_create_token))
-    response = api_client.get(url)
+    response = api_client.get(path)
 
     assert response.json() == {'response': 'json_test'}
 
     assert len(responses.calls) == 1
-    assert responses.calls[0].request.url == settings.API_DITEC + '/noticias/_search'  # NOQA
+    assert responses.calls[0].request.url == url
 
 
 @pytest.mark.django_db
 @responses.activate
 def test_search_news_without_word(api_client, get_or_create_token):
+    url = settings.API_DITEC + '/noticias/_search'
     responses.add(responses.POST,
-                  settings.API_DITEC + '/noticias/_search',
+                  url,
                   json={'response': 'json_test'}, status=201)
 
-    url = reverse('news-search')
+    path = reverse('news-search')
     api_client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(
         get_or_create_token))
-    response = api_client.get(url)
+    response = api_client.get(path)
 
     assert response.json() == {'error': 'It is necessary to pass search'}
     assert len(responses.calls) == 0
@@ -117,33 +104,143 @@ def test_search_news_without_word(api_client, get_or_create_token):
 
 @pytest.mark.django_db
 @responses.activate
-def test_get_filter_news(api_client, get_or_create_token):
+def test_radioagency(api_client, get_or_create_token):
+    url = settings.API_DITEC + '/radioagencia/_search'
     responses.add(responses.POST,
-                  settings.API_DITEC + '/noticias/_search',
+                  url,
                   json={'response': 'json_test'}, status=201)
 
-    listNews = SearchNews()
+    path = reverse('radioagency')
+    api_client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(
+        get_or_create_token))
+    response = api_client.get(path)
 
-    response = listNews.get_filter_news('word')
-
-    assert response == {'response': 'json_test'}
+    assert response.json() == {'response': 'json_test'}
 
     assert len(responses.calls) == 1
-    assert responses.calls[0].request.url == settings.API_DITEC + '/noticias/_search'  # NOQA
+    assert responses.calls[0].request.url == url
 
 
 @pytest.mark.django_db
 @responses.activate
-def test_error_get_filter_news(api_client, get_or_create_token):
+def test_not_found_radioagency(api_client, get_or_create_token):
+    url = settings.API_DITEC + '/radioagencia/_search'
     responses.add(responses.POST,
-                  settings.API_DITEC + '/noticias/_search',
+                  url,
                   status=201)
 
-    listNews = SearchNews()
+    path = reverse('radioagency')
+    api_client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(
+        get_or_create_token))
+    response = api_client.get(path)
 
-    response = listNews.get_filter_news('word')
+    assert response.json() == {'error': 'Error not found news'}
+
+    assert len(responses.calls) == 1
+    assert responses.calls[0].request.url == url
+
+
+@pytest.mark.django_db
+@responses.activate
+def test_search_radioagency(api_client, get_or_create_token):
+    url = settings.API_DITEC + '/radioagencia/_search'
+    responses.add(responses.POST,
+                  url,
+                  json={'response': 'json_test'}, status=201)
+
+    path = reverse('radioagency-search') + '?search=word'
+    api_client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(
+        get_or_create_token))
+    response = api_client.get(path)
+
+    assert response.json() == {'response': 'json_test'}
+
+    assert len(responses.calls) == 1
+    assert responses.calls[0].request.url == url
+
+
+@pytest.mark.django_db
+@responses.activate
+def test_search_radioagency_without_word(api_client, get_or_create_token):
+    url = settings.API_DITEC + '/radioagencia/_search'
+    responses.add(responses.POST,
+                  url,
+                  json={'response': 'json_test'}, status=201)
+
+    path = reverse('radioagency-search')
+    api_client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(
+        get_or_create_token))
+    response = api_client.get(path)
+
+    assert response.json() == {'error': 'It is necessary to pass search'}
+    assert len(responses.calls) == 0
+
+
+@pytest.mark.django_db
+@responses.activate
+def test_get_subjects(api_client, get_or_create_token):
+    path = '/noticias/_search'
+    responses.add(responses.POST,
+                  settings.API_DITEC + path,
+                  json={'response': 'json_test'}, status=201)
+
+    response = get_subjects(path)
+
+    assert response == {'response': 'json_test'}
+
+    assert len(responses.calls) == 1
+    assert responses.calls[0].request.url == settings.API_DITEC + \
+        '/noticias/_search'
+
+
+@pytest.mark.django_db
+@responses.activate
+def test_get_subjects_without_json(api_client, get_or_create_token):
+    path = '/noticias/_search'
+
+    responses.add(responses.POST,
+                  settings.API_DITEC + path,
+                  status=201)
+
+    response = get_subjects(path)
 
     assert response == {'error': 'Error not found news'}
 
     assert len(responses.calls) == 1
-    assert responses.calls[0].request.url == settings.API_DITEC + '/noticias/_search'  # NOQA
+    assert responses.calls[0].request.url == settings.API_DITEC + \
+        '/noticias/_search'
+
+
+@pytest.mark.django_db
+@responses.activate
+def test_get_filter_subjects(api_client, get_or_create_token):
+    path = '/noticias/_search'
+    responses.add(responses.POST,
+                  settings.API_DITEC + path,
+                  json={'response': 'json_test'}, status=201)
+
+    response = get_filter_subjects(path, 'word')
+
+    assert response == {'response': 'json_test'}
+
+    assert len(responses.calls) == 1
+    assert responses.calls[0].request.url == settings.API_DITEC + \
+        '/noticias/_search'
+
+
+@pytest.mark.django_db
+@responses.activate
+def test_get_filter_subjects_without_json(api_client, get_or_create_token):
+    path = '/noticias/_search'
+
+    responses.add(responses.POST,
+                  settings.API_DITEC + path,
+                  status=201)
+
+    response = get_filter_subjects(path, 'word')
+
+    assert response == {'error': 'Error not found news'}
+
+    assert len(responses.calls) == 1
+    assert responses.calls[0].request.url == settings.API_DITEC + \
+        '/noticias/_search'
