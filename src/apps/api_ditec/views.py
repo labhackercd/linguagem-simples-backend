@@ -1,7 +1,7 @@
 import requests
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .configs_api import (DEFAULT_QUERRY, DATE_QUERRY, SEARCH_QUERRY,
+from .configs_api import (DEFAULT_QUERY, DATE_QUERY, SEARCH_QUERY,
                           NUMBER_WEEKS, URL, HEADERS)
 
 
@@ -13,12 +13,12 @@ class ListNews(APIView):
 
     def get_news(self):
         url_prefix = 'noticias'
-        querry = DEFAULT_QUERRY.replace('replace_querry', DATE_QUERRY)
-        querry = querry.replace('NW', NUMBER_WEEKS)
+        query = DEFAULT_QUERY.replace('replace_query', DATE_QUERY)
+        query = query.replace('NW', NUMBER_WEEKS)
 
         response = requests.request('POST', URL.format(url_prefix),
                                     headers=HEADERS,
-                                    data=querry)
+                                    data=query)
         try:
             response = response.json()
         except Exception:
@@ -40,12 +40,12 @@ class SearchNews(APIView):
     def get_filter_news(self, words):
         url_prefix = 'noticias'
 
-        querry = DEFAULT_QUERRY.replace('replace_querry', SEARCH_QUERRY)
-        querry = querry.replace('words', words)
+        query = DEFAULT_QUERY.replace('replace_query', SEARCH_QUERY)
+        query = query.replace('words', words)
 
         response = requests.request('POST', URL.format(url_prefix),
                                     headers=HEADERS,
-                                    data=querry)
+                                    data=query)
         try:
             response = response.json()
         except Exception:

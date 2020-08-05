@@ -3,8 +3,8 @@ HEADERS = {'Content-Type': 'application/json'}
 
 NUMBER_WEEKS = '4'
 
-DEFAULT_QUERRY = '{"query": {\
-                            replace_querry\
+DEFAULT_QUERY = '{"query": {\
+                            replace_query\
                             },\
                     "sort": [\
                         { "dataOrdenacao":   { "order": "desc" }},\
@@ -15,7 +15,7 @@ DEFAULT_QUERRY = '{"query": {\
                 }'
 
 
-DATE_QUERRY = '"bool": {\
+DATE_QUERY = '"bool": {\
                             "filter": [\
                                 {\
                                     "range": {\
@@ -27,4 +27,4 @@ DATE_QUERRY = '"bool": {\
                             ]\
                         }'
 
-SEARCH_QUERRY = '"match": {"titulo": "words"} '
+SEARCH_QUERY = '"match": {"titulo": "words"} '
