@@ -6,6 +6,7 @@ import responses
 from mixer.backend.django import mixer
 from rest_framework_simplejwt.tokens import RefreshToken
 from .views import ListNews, SearchNews
+from rest_framework.test import APIRequestFactory
 
 
 @pytest.fixture
@@ -22,12 +23,18 @@ def api_client():
 
 
 @pytest.mark.django_db
+def test_name_app():
+    from apps.api_ditec.apps import ApiDitecConfig
+    assert ApiDitecConfig.name == 'api_ditec'
+
+
+@pytest.mark.django_db
 @responses.activate
 def test_news(api_client, get_or_create_token):
     responses.add(responses.POST, 'http://es-hom.camara.gov.br:9200/noticias/_search',
                   json={'response': 'json_test'}, status=201)
 
-    url = reverse('news-list')
+    url = reverse('news')
     api_client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(
         get_or_create_token))
     response = api_client.get(url)
@@ -44,7 +51,7 @@ def test_not_found_news(api_client, get_or_create_token):
     responses.add(responses.POST, 'http://es-hom.camara.gov.br:9200/noticias/_search',
                   status=201)
 
-    url = reverse('news-list')
+    url = reverse('news')
     api_client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(
         get_or_create_token))
     response = api_client.get(url)
@@ -73,6 +80,38 @@ def test_get_news(api_client, get_or_create_token):
 
 @pytest.mark.django_db
 @responses.activate
+def test_search_news(api_client, get_or_create_token):
+    responses.add(responses.POST, 'http://es-hom.camara.gov.br:9200/noticias/_search',
+                  json={'response': 'json_test'}, status=201)
+
+    url = reverse('news-search') + '?search=word'
+    api_client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(
+        get_or_create_token))
+    response = api_client.get(url)
+
+    assert response.json() == {'response': 'json_test'}
+
+    assert len(responses.calls) == 1
+    assert responses.calls[0].request.url == 'http://es-hom.camara.gov.br:9200/noticias/_search'
+
+
+@pytest.mark.django_db
+@responses.activate
+def test_search_news_without_word(api_client, get_or_create_token):
+    responses.add(responses.POST, 'http://es-hom.camara.gov.br:9200/noticias/_search',
+                  json={'response': 'json_test'}, status=201)
+
+    url = reverse('news-search')
+    api_client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(
+        get_or_create_token))
+    response = api_client.get(url)
+
+    assert response.json() == {'error': 'It is necessary to pass search'}
+    assert len(responses.calls) == 0
+
+
+@pytest.mark.django_db
+@responses.activate
 def test_get_filter_news(api_client, get_or_create_token):
     responses.add(responses.POST, 'http://es-hom.camara.gov.br:9200/noticias/_search',
                   json={'response': 'json_test'}, status=201)
@@ -82,6 +121,22 @@ def test_get_filter_news(api_client, get_or_create_token):
     response = listNews.get_filter_news('word')
 
     assert response == {'response': 'json_test'}
+
+    assert len(responses.calls) == 1
+    assert responses.calls[0].request.url == 'http://es-hom.camara.gov.br:9200/noticias/_search'
+
+
+@pytest.mark.django_db
+@responses.activate
+def test_error_get_filter_news(api_client, get_or_create_token):
+    responses.add(responses.POST, 'http://es-hom.camara.gov.br:9200/noticias/_search',
+                  status=201)
+
+    listNews = SearchNews()
+
+    response = listNews.get_filter_news('word')
+
+    assert response == {'error': 'Error not found news'}
 
     assert len(responses.calls) == 1
     assert responses.calls[0].request.url == 'http://es-hom.camara.gov.br:9200/noticias/_search'
