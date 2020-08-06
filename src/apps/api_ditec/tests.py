@@ -319,6 +319,7 @@ def test_get_filter_subjects_without_json(api_client, get_or_create_token):
     assert responses.calls[0].request.url == settings.API_DITEC + \
         '/noticias/_search'
 
+
 @pytest.mark.django_db
 @responses.activate
 def test_radiocamara(api_client, get_or_create_token):

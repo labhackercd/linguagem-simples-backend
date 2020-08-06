@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import (ListNews, SearchNews, ListRadioagency, SearchRadioagency,
-                    ListTvCamara, SearchTvCamara, ListRadioCamara, 
+                    ListTvCamara, SearchTvCamara, ListRadioCamara,
                     SearchRadioCamara)
 
 urlpatterns = [
