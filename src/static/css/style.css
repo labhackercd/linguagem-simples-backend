@@ -1,3 +1,81 @@
+body {
+  font-family: 'Open Sans', sans-serif;
+  margin: 0;
+  border: 0;
+}
 h1 {
-    color: red;
+  color: #fff;
+}
+.grid {
+	display: grid;
+  grid-template-columns: 11fr 1fr;
+  background-color: #00AF82; /* verde-camara-light */
+  height: 100vh;
+  font-family: 'Open Sans', sans-serif;
+}
+.content {
+  background-color: #F2F2F2; /* cinza */
+  height: 100vh;
+  border-radius: 0 25px 0 0;
+  display: grid;
+  grid-template-columns: 1fr 5fr 4fr;
+}
+.space-left {}
+.center {
+  margin: 3rem 3rem 2rem 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.camara-logo {
+  align-self: flex-start;
+}
+.estudio-logo {
+  align-self: flex-start;
+}
+.middle {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 60%;
+}
+.recover-pass {
+  display: flex;
+  flex-direction: column;
+}
+.email-input {
+  padding: 12px 20px;
+  border: 1px solid #C4C4C4;
+  border-radius: 4px;
+}
+.text-area {
+  display: flex;
+  flex-direction: column;
+  margin: -4rem 0 1rem 0;
+}
+.title {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+}
+.explanatory-text {
+  color: #666;
+  font-size: 16;
+}
+.email-label {
+  color: #666;
+  margin: 0 0 0.2rem 0;
+}
+.button {
+  background-color: #00AF82;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  padding: 0.5rem;
+  margin: 1rem 0;
+  width: 40%;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 13px; /* equivalent to h5 */
 }
