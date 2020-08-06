@@ -3,6 +3,7 @@ from django.urls import path, include, re_path
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
+from django.views.generic import TemplateView 
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -29,5 +30,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('apps.authentication.urls')),
     path('api/', include('apps.plenary_session.urls')),
-    path('api/', include('apps.api_ditec.urls'))
+    path('api/', include('apps.api_ditec.urls')),
+    path('teste/', TemplateView.as_view(template_name="components/base.html")),
 ]
