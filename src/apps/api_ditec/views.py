@@ -71,6 +71,26 @@ class SearchTvCamara(APIView):
         return Response(subjects)
 
 
+class ListRadioCamara(APIView):
+    path = '/programas-radio/_search'
+
+    def get(self, request):
+        subjects = get_subjects(self.path)
+        return Response(subjects)
+
+
+class SearchRadioCamara(APIView):
+    path = '/programas-radio/_search'
+
+    def get(self, request, format=None):
+        words = request.query_params.get('search', None)
+        if words:
+            subjects = get_filter_subjects(self.path, words)
+        else:
+            subjects = {'error': _('It is necessary to pass search')}
+        return Response(subjects)
+
+
 def get_subjects(path):
     query = DEFAULT_QUERY.replace('replace_query', LAST_UPDATE_QUERY)
 
@@ -82,7 +102,7 @@ def get_subjects(path):
     try:
         response = response.json()
     except JSONDecodeError:
-        response = {'error': _('Error not found news')}
+        response = {'error': _('Error not found results')}
 
     return response
 
@@ -98,6 +118,6 @@ def get_filter_subjects(path, words):
     try:
         response = response.json()
     except JSONDecodeError:
-        response = {'error': _('Error not found news')}
+        response = {'error': _('Error not found results')}
 
     return response

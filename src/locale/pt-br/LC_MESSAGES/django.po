@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-05 14:08-0300\n"
+"POT-Creation-Date: 2020-08-06 15:19-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,13 +17,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: apps/api_ditec/views.py:27 apps/api_ditec/views.py:54
-msgid "Error not found news"
-msgstr "Erro, não foram encontradas notícias"
-
-#: apps/api_ditec/views.py:39
+#: apps/api_ditec/views.py:30 apps/api_ditec/views.py:50
+#: apps/api_ditec/views.py:70 apps/api_ditec/views.py:90
 msgid "It is necessary to pass search"
 msgstr "É necessário informar uma palavra para pesquisar"
+
+#: apps/api_ditec/views.py:105 apps/api_ditec/views.py:121
+msgid "Error not found results"
+msgstr "Erro, não foram encontrados resultados"
 
 #: apps/authentication/models.py:8
 msgid "editor"
