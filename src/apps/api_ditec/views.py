@@ -1,10 +1,14 @@
+from json import JSONDecodeError
+
 import requests
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from .configs_api import (DEFAULT_QUERY, DATE_QUERY, SEARCH_QUERY,
-                          NUMBER_WEEKS, HEADERS)
 from django.conf import settings
 from django.utils.translation import gettext_lazy as _
+
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from .configs_api import (DEFAULT_QUERY, HEADERS, LAST_UPDATE_QUERY,
+                          SEARCH_QUERY)
 
 
 class ListNews(APIView):
@@ -47,16 +51,37 @@ class SearchRadioagency(APIView):
         return Response(subjects)
 
 
+class ListTvCamara(APIView):
+    path = '/programas-tv/_search'
+
+    def get(self, request):
+        subjects = get_subjects(self.path)
+        return Response(subjects)
+
+
+class SearchTvCamara(APIView):
+    path = '/programas-tv/_search'
+
+    def get(self, request, format=None):
+        words = request.query_params.get('search', None)
+        if words:
+            subjects = get_filter_subjects(self.path, words)
+        else:
+            subjects = {'error': _('It is necessary to pass search')}
+        return Response(subjects)
+
+
 def get_subjects(path):
-    query = DEFAULT_QUERY.replace('replace_query', DATE_QUERY)
-    query = query.replace('NW', NUMBER_WEEKS)
+    query = DEFAULT_QUERY.replace('replace_query', LAST_UPDATE_QUERY)
 
     response = requests.request('POST', settings.API_DITEC + path,
                                 headers=HEADERS,
                                 data=query)
+
+    print(response)
     try:
         response = response.json()
-    except Exception:
+    except JSONDecodeError:
         response = {'error': _('Error not found news')}
 
     return response
@@ -72,7 +97,7 @@ def get_filter_subjects(path, words):
                                 data=query)
     try:
         response = response.json()
-    except Exception:
+    except JSONDecodeError:
         response = {'error': _('Error not found news')}
 
     return response

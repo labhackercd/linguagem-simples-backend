@@ -178,6 +178,80 @@ def test_search_radioagency_without_word(api_client, get_or_create_token):
 
 @pytest.mark.django_db
 @responses.activate
+def test_tvcamara(api_client, get_or_create_token):
+    url = settings.API_DITEC + '/programas-tv/_search'
+    responses.add(responses.POST,
+                  url,
+                  json={'response': 'json_test'}, status=201)
+
+    path = reverse('tvcamara')
+    api_client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(
+        get_or_create_token))
+    response = api_client.get(path)
+
+    assert response.json() == {'response': 'json_test'}
+
+    assert len(responses.calls) == 1
+    assert responses.calls[0].request.url == url
+
+
+@pytest.mark.django_db
+@responses.activate
+def test_not_found_tvcamara(api_client, get_or_create_token):
+    url = settings.API_DITEC + '/programas-tv/_search'
+    responses.add(responses.POST,
+                  url,
+                  status=201)
+
+    path = reverse('tvcamara')
+    api_client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(
+        get_or_create_token))
+    response = api_client.get(path)
+
+    assert response.json() == {'error': 'Error not found news'}
+
+    assert len(responses.calls) == 1
+    assert responses.calls[0].request.url == url
+
+
+@pytest.mark.django_db
+@responses.activate
+def test_search_tvcamara(api_client, get_or_create_token):
+    url = settings.API_DITEC + '/programas-tv/_search'
+    responses.add(responses.POST,
+                  url,
+                  json={'response': 'json_test'}, status=201)
+
+    path = reverse('tvcamara-search') + '?search=word'
+    api_client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(
+        get_or_create_token))
+    response = api_client.get(path)
+
+    assert response.json() == {'response': 'json_test'}
+
+    assert len(responses.calls) == 1
+    assert responses.calls[0].request.url == url
+
+
+@pytest.mark.django_db
+@responses.activate
+def test_search_tvcamara_without_word(api_client, get_or_create_token):
+    url = settings.API_DITEC + '/programas-tv/_search'
+    responses.add(responses.POST,
+                  url,
+                  json={'response': 'json_test'}, status=201)
+
+    path = reverse('tvcamara-search')
+    api_client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(
+        get_or_create_token))
+    response = api_client.get(path)
+
+    assert response.json() == {'error': 'It is necessary to pass search'}
+    assert len(responses.calls) == 0
+
+
+@pytest.mark.django_db
+@responses.activate
 def test_get_subjects(api_client, get_or_create_token):
     path = '/noticias/_search'
     responses.add(responses.POST,
