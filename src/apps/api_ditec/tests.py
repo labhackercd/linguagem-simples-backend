@@ -60,7 +60,7 @@ def test_not_found_news(api_client, get_or_create_token):
         get_or_create_token))
     response = api_client.get(path)
 
-    assert response.json() == {'error': 'Error not found news'}
+    assert response.json() == {'error': 'Error not found results'}
 
     assert len(responses.calls) == 1
     assert responses.calls[0].request.url == url
@@ -134,7 +134,7 @@ def test_not_found_radioagency(api_client, get_or_create_token):
         get_or_create_token))
     response = api_client.get(path)
 
-    assert response.json() == {'error': 'Error not found news'}
+    assert response.json() == {'error': 'Error not found results'}
 
     assert len(responses.calls) == 1
     assert responses.calls[0].request.url == url
@@ -208,7 +208,7 @@ def test_not_found_tvcamara(api_client, get_or_create_token):
         get_or_create_token))
     response = api_client.get(path)
 
-    assert response.json() == {'error': 'Error not found news'}
+    assert response.json() == {'error': 'Error not found results'}
 
     assert len(responses.calls) == 1
     assert responses.calls[0].request.url == url
@@ -278,7 +278,7 @@ def test_get_subjects_without_json(api_client, get_or_create_token):
 
     response = get_subjects(path)
 
-    assert response == {'error': 'Error not found news'}
+    assert response == {'error': 'Error not found results'}
 
     assert len(responses.calls) == 1
     assert responses.calls[0].request.url == settings.API_DITEC + \
@@ -313,8 +313,82 @@ def test_get_filter_subjects_without_json(api_client, get_or_create_token):
 
     response = get_filter_subjects(path, 'word')
 
-    assert response == {'error': 'Error not found news'}
+    assert response == {'error': 'Error not found results'}
 
     assert len(responses.calls) == 1
     assert responses.calls[0].request.url == settings.API_DITEC + \
         '/noticias/_search'
+
+
+@pytest.mark.django_db
+@responses.activate
+def test_radiocamara(api_client, get_or_create_token):
+    url = settings.API_DITEC + '/programas-radio/_search'
+    responses.add(responses.POST,
+                  url,
+                  json={'response': 'json_test'}, status=201)
+
+    path = reverse('radiocamara')
+    api_client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(
+        get_or_create_token))
+    response = api_client.get(path)
+
+    assert response.json() == {'response': 'json_test'}
+
+    assert len(responses.calls) == 1
+    assert responses.calls[0].request.url == url
+
+
+@pytest.mark.django_db
+@responses.activate
+def test_not_found_radiocamara(api_client, get_or_create_token):
+    url = settings.API_DITEC + '/programas-radio/_search'
+    responses.add(responses.POST,
+                  url,
+                  status=201)
+
+    path = reverse('radiocamara')
+    api_client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(
+        get_or_create_token))
+    response = api_client.get(path)
+
+    assert response.json() == {'error': 'Error not found results'}
+
+    assert len(responses.calls) == 1
+    assert responses.calls[0].request.url == url
+
+
+@pytest.mark.django_db
+@responses.activate
+def test_search_radiocamara(api_client, get_or_create_token):
+    url = settings.API_DITEC + '/programas-radio/_search'
+    responses.add(responses.POST,
+                  url,
+                  json={'response': 'json_test'}, status=201)
+
+    path = reverse('radiocamara-search') + '?search=word'
+    api_client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(
+        get_or_create_token))
+    response = api_client.get(path)
+
+    assert response.json() == {'response': 'json_test'}
+
+    assert len(responses.calls) == 1
+    assert responses.calls[0].request.url == url
+
+
+@pytest.mark.django_db
+@responses.activate
+def test_search_radiocamara_without_word(api_client, get_or_create_token):
+    url = settings.API_DITEC + '/programas-radio/_search'
+    responses.add(responses.POST,
+                  url,
+                  json={'response': 'json_test'}, status=201)
+
+    path = reverse('radiocamara-search')
+    api_client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(
+        get_or_create_token))
+    response = api_client.get(path)
+
+    assert response.json() == {'error': 'It is necessary to pass search'}
+    assert len(responses.calls) == 0
