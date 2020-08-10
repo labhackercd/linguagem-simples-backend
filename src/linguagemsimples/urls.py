@@ -32,4 +32,5 @@ urlpatterns = [
     path('api/', include('apps.plenary_session.urls')),
     path('api/', include('apps.api_ditec.urls')),
     path('teste/', TemplateView.as_view(template_name="components/base.html")),
+    path('', include('django.contrib.auth.urls')),
 ]

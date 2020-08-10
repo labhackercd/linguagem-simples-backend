@@ -3,11 +3,11 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}{% endblock title %}</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -16,25 +16,21 @@
       <asside class="space-left"></asside>
       <div class="center">
         <div class="estudio-logo">
-          <img src="/img/estudio-logo.svg"/>
+          <img src="{% static 'img/estudio-logo.svg' %}" />
         </div>
         <section class="middle">
-          <div class="text-area">
-            <h3 class="title">Restaurar senha</h3>
-            <div class="explanatory-text">Esqueceu sua senha? Digite seu e-mail no campo abaixo e vamos te enviar instruções para criar um nova.</div>
-          </div>
-          <form action="#" class="recover-pass">
-            <h6 class="email-label">Email</h6>
-            <input type="text" id="email" name="email" class="email-input">
-            <button class="button">Recuperar senha</button>
-          </form>
+
+          {% block content %}
+
+          {% endblock content %}
+
         </section>
         <div class="camara-logo">
-          <img src="/img/camara-logo.svg"/>
+          <img src="{% static 'img/camara-logo.svg' %}" />
         </div>
       </div>
     </div>
-    <asside class="sidebar"></asside>
+    <asside class=" sidebar"></asside>
   </div>
 </body>
 
