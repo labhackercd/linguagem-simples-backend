@@ -42,11 +42,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # Third apps
     'rest_framework',
     'drf_yasg',
     'django_extensions',
     'corsheaders',
+    'django_filters',
 
+    # Local apps
     'apps.authentication',
     'apps.plenary_session',
     'apps.api_ditec'
