@@ -1,6 +1,6 @@
 import pytest
 from mixer.backend.django import mixer
-from datetime import datetime
+from datetime import datetime, timedelta
 from django.utils import timezone
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import get_user_model
@@ -68,13 +68,6 @@ def test_plenary_session_create_erro_situation_session():
     with pytest.raises(Exception):
         plenary_session = mixer.blend(PlenarySession,
                                       situation_session='ERROR')
-        plenary_session.full_clean()
-
-
-@pytest.mark.django_db
-def test_plenary_session_create_erro_resume():
-    with pytest.raises(Exception):
-        plenary_session = mixer.blend(PlenarySession, resume='')
         plenary_session.full_clean()
 
 
@@ -210,3 +203,92 @@ def test_publication_update_url(api_client, get_or_create_token):
     request = json.loads(response.content)
     assert response.status_code == 200
     assert request['state'] == 'inactive'
+
+
+@pytest.mark.django_db
+def test_session_plenary_ordering_desc_url(api_client, get_or_create_token):
+    ORDER_DESC = '?ordering=-date'
+    today = datetime.now()
+    yesterday = today - timedelta(days=1)
+    mixer.blend(PlenarySession, date=yesterday)
+    mixer.blend(PlenarySession, date=today)
+    url = reverse('sessions-list') + ORDER_DESC
+    api_client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(
+        get_or_create_token))
+    response = api_client.get(url)
+    respose_json = json.loads(response.content)
+    assert response.status_code == 200
+    assert respose_json[0]['date'] == today.strftime('%Y-%m-%d')
+
+
+@pytest.mark.django_db
+def test_session_plenary_ordering_asc_url(api_client, get_or_create_token):
+    ORDER_ASC = '?ordering=date'
+    today = datetime.now()
+    yesterday = today - timedelta(days=1)
+    mixer.blend(PlenarySession, date=yesterday)
+    mixer.blend(PlenarySession, date=today)
+    url = reverse('sessions-list') + ORDER_ASC
+    api_client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(
+        get_or_create_token))
+    response = api_client.get(url)
+    respose_json = json.loads(response.content)
+    assert response.status_code == 200
+    assert respose_json[0]['date'] == yesterday.strftime('%Y-%m-%d')
+
+
+@pytest.mark.django_db
+def test_session_plenary_filter_date_url(api_client, get_or_create_token):
+    DATE = '?date={}'
+    today = datetime.now()
+    yesterday = today - timedelta(days=1)
+    mixer.blend(PlenarySession, date=yesterday)
+    mixer.blend(PlenarySession, date=today)
+    url = reverse('sessions-list') + \
+        DATE.format(today.strftime('%Y-%m-%d'))
+    print(url)
+    api_client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(
+        get_or_create_token))
+    response = api_client.get(url)
+    respose_json = json.loads(response.content)
+    assert response.status_code == 200
+    assert len(respose_json) == 1
+    assert PlenarySession.objects.count() == 2
+
+
+@pytest.mark.django_db
+def test_session_plenary_filter_gte_date_url(api_client, get_or_create_token):
+    DATE = '?date__gte={}'
+    today = datetime.now()
+    yesterday = today - timedelta(days=1)
+    mixer.blend(PlenarySession, date=yesterday)
+    mixer.blend(PlenarySession, date=today)
+    url = reverse('sessions-list') + \
+        DATE.format(today.strftime('%Y-%m-%d'))
+    print(url)
+    api_client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(
+        get_or_create_token))
+    response = api_client.get(url)
+    respose_json = json.loads(response.content)
+    assert response.status_code == 200
+    assert len(respose_json) == 1
+    assert PlenarySession.objects.count() == 2
+
+
+@pytest.mark.django_db
+def test_session_plenary_filter_lte_date_url(api_client, get_or_create_token):
+    DATE = '?date__lte={}'
+    today = datetime.now()
+    yesterday = today - timedelta(days=1)
+    mixer.blend(PlenarySession, date=yesterday)
+    mixer.blend(PlenarySession, date=today)
+    url = reverse('sessions-list') + \
+        DATE.format(yesterday.strftime('%Y-%m-%d'))
+    print(url)
+    api_client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(
+        get_or_create_token))
+    response = api_client.get(url)
+    respose_json = json.loads(response.content)
+    assert response.status_code == 200
+    assert len(respose_json) == 1
+    assert PlenarySession.objects.count() == 2

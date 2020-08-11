@@ -30,12 +30,16 @@ class PlenarySession(TimestampedMixin):
                               ('closed_session', _('closed session')),
                               ]
 
-    location = models.CharField(max_length=20, choices=list_location)
-    date = models.DateField()
-    type_session = models.CharField(max_length=20, choices=list_type_session)
-    situation_session = models.CharField(max_length=20,
+    location = models.CharField(verbose_name=_('location'), max_length=20,
+                                choices=list_location)
+    date = models.DateField(verbose_name=_('date'))
+    type_session = models.CharField(verbose_name=_('type_session'),
+                                    max_length=20,
+                                    choices=list_type_session)
+    situation_session = models.CharField(verbose_name=_('situation_session'),
+                                         max_length=20,
                                          choices=list_situation_session)
-    resume = models.TextField()
+    resume = models.TextField(verbose_name=_('resume'), blank=True, default='')
 
     class Meta:
         verbose_name = _('plenary session')

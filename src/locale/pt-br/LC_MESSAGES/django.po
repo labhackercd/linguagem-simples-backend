@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-06 15:19-0300\n"
+"POT-Creation-Date: 2020-08-10 18:13-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -78,38 +78,42 @@ msgstr "Próxima pauta"
 msgid "closed session"
 msgstr "Sessão encerrada"
 
-#: apps/plenary_session/models.py:41 apps/plenary_session/models.py:62
+#: apps/plenary_session/models.py:34
+msgid "location"
+msgstr "localização"
+
+#: apps/plenary_session/models.py:44 apps/plenary_session/models.py:65
 msgid "plenary session"
 msgstr "Sessão de plenário"
 
-#: apps/plenary_session/models.py:42
+#: apps/plenary_session/models.py:45
 msgid "plenary sessions"
 msgstr "Sessões de plenário"
 
-#: apps/plenary_session/models.py:50
+#: apps/plenary_session/models.py:53
 msgid "published"
 msgstr "publicado"
 
-#: apps/plenary_session/models.py:51
+#: apps/plenary_session/models.py:54
 msgid "inactive"
 msgstr "inativo"
 
-#: apps/plenary_session/models.py:54
+#: apps/plenary_session/models.py:57
 msgid "state"
 msgstr "estado"
 
-#: apps/plenary_session/models.py:58
+#: apps/plenary_session/models.py:61
 msgid "content"
 msgstr "conteúdo"
 
-#: apps/plenary_session/models.py:66
+#: apps/plenary_session/models.py:69
 msgid "author"
 msgstr "autor"
 
-#: apps/plenary_session/models.py:69
+#: apps/plenary_session/models.py:72
 msgid "publication"
 msgstr "publicação"
 
-#: apps/plenary_session/models.py:70
+#: apps/plenary_session/models.py:73
 msgid "publications"
 msgstr "publicações"
