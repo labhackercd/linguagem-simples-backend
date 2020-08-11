@@ -56,7 +56,6 @@ h1 {
 .title {
   font-family: 'Open Sans', sans-serif;
   font-weight: 600;
-  margin: 0 0 0.5rem 0;
 }
 .explanatory-text {
   color: #666;
@@ -78,4 +77,17 @@ h1 {
   text-decoration: none;
   display: inline-block;
   font-size: 13px; /* equivalent to h5 */
+}
+.form-error-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-decoration: none;
+  height: 50%;
+}
+.errorlist {
+  padding-left: 0;
+  color: #A2A2A2;
+  list-style-type: none;
+  width: 100%;
 }
