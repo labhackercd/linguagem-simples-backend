@@ -8,15 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-<<<<<<< HEAD
 "POT-Creation-Date: 2020-08-10 18:13-0300\n"
-=======
-<<<<<<< HEAD
-"POT-Creation-Date: 2020-08-06 15:19-0300\n"
-=======
-"POT-Creation-Date: 2020-08-10 17:58-0300\n"
->>>>>>> create confirm password and add translations
->>>>>>> create confirm password and add translations
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,75 +18,65 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: apps/api_ditec/views.py:30 apps/api_ditec/views.py:50
-<<<<<<< HEAD
 #: apps/api_ditec/views.py:70 apps/api_ditec/views.py:90
 msgid "It is necessary to pass search"
-msgstr "É necessário informar uma palavra para pesquisar"
+msgstr ""
 
 #: apps/api_ditec/views.py:105 apps/api_ditec/views.py:121
 msgid "Error not found results"
-msgstr "Erro, não foram encontrados resultados"
-=======
-#: apps/api_ditec/views.py:70
-msgid "It is necessary to pass search"
-msgstr "É necessário informar uma palavra para pesquisar"
-
-#: apps/api_ditec/views.py:85 apps/api_ditec/views.py:101
-msgid "Error not found news"
-msgstr "Erro, não foram encontradas notícias"
->>>>>>> create confirm password and add translations
+msgstr ""
 
 #: apps/authentication/models.py:8
 msgid "editor"
-msgstr "editor"
+msgstr ""
 
 #: apps/authentication/models.py:15
 msgid "user"
-msgstr "usuário"
+msgstr ""
 
 #: apps/authentication/models.py:16
 msgid "users"
-msgstr "usuários"
+msgstr ""
 
 #: apps/plenary_session/models.py:7
 msgid "created"
-msgstr "criado"
+msgstr ""
 
 #: apps/plenary_session/models.py:9
 msgid "modified"
-msgstr "modificado"
+msgstr ""
 
 #: apps/plenary_session/models.py:22
 msgid "plenary"
-msgstr "Plenário"
+msgstr ""
 
 #: apps/plenary_session/models.py:23
 msgid "virtual session"
-msgstr "Sessão virtual"
+msgstr ""
 
 #: apps/plenary_session/models.py:24
 msgid "presential session"
-msgstr "Sessão presencial"
+msgstr ""
 
 #: apps/plenary_session/models.py:26
 msgid "pré session"
-msgstr "Pré sessão"
+msgstr ""
 
 #: apps/plenary_session/models.py:27
 msgid "started session"
-msgstr "Sessão iniciada"
+msgstr ""
 
 #: apps/plenary_session/models.py:28
 msgid "started votation"
-msgstr "Votação iniciada"
+msgstr ""
 
 #: apps/plenary_session/models.py:29
 msgid "next topic"
-msgstr "Próxima pauta"
+msgstr ""
 
 #: apps/plenary_session/models.py:30
 msgid "closed session"
-msgstr "Sessão encerrada"
+msgstr ""
 
 #: apps/plenary_session/models.py:34
 msgid "location"
@@ -102,39 +84,39 @@ msgstr "localização"
 
 #: apps/plenary_session/models.py:44 apps/plenary_session/models.py:65
 msgid "plenary session"
-msgstr "Sessão de plenário"
+msgstr ""
 
 #: apps/plenary_session/models.py:45
 msgid "plenary sessions"
-msgstr "Sessões de plenário"
+msgstr ""
 
 #: apps/plenary_session/models.py:53
 msgid "published"
-msgstr "publicado"
+msgstr ""
 
 #: apps/plenary_session/models.py:54
 msgid "inactive"
-msgstr "inativo"
+msgstr ""
 
 #: apps/plenary_session/models.py:57
 msgid "state"
-msgstr "estado"
+msgstr ""
 
 #: apps/plenary_session/models.py:61
 msgid "content"
-msgstr "conteúdo"
+msgstr ""
 
 #: apps/plenary_session/models.py:69
 msgid "author"
-msgstr "autor"
+msgstr ""
 
 #: apps/plenary_session/models.py:72
 msgid "publication"
-msgstr "publicação"
+msgstr ""
 
 #: apps/plenary_session/models.py:73
 msgid "publications"
-msgstr "publicações"
+msgstr ""
 
 #: templates/registration/password_reset_complete.html:4
 #: templates/registration/password_reset_complete.html:9
@@ -145,37 +127,36 @@ msgstr "publicações"
 #: templates/registration/password_reset_form.html:9
 #: templates/registration/password_reset_form.html:19
 msgid "Reset password"
-msgstr "Resetar senha"
+msgstr ""
 
 #: templates/registration/password_reset_complete.html:11
 msgid ""
+"\n"
 "        Your password has been set. You may go ahead and sign in now.\n"
 "        "
 msgstr ""
-"Sua senha foi alterada com sucesso. Você já pode entrar na ferramenta."
 
 #: templates/registration/password_reset_confirm.html:8
 #: templates/registration/password_reset_confirm.html:16
 msgid "New password"
-msgstr "Nova senha"
+msgstr ""
 
 #: templates/registration/password_reset_confirm.html:18
 msgid "Confirm password:"
-msgstr "Confirme sua senha:"
+msgstr ""
 
 #: templates/registration/password_reset_confirm.html:20
 msgid "Set password"
-msgstr "Atualizar senha"
+msgstr ""
 
 #: templates/registration/password_reset_done.html:11
 msgid ""
+"\n"
 "        We've emailed you instructions for setting your password, if an "
 "account exists with the email you entered.\n"
 "        You should receive them shortly.\n"
 "        "
 msgstr ""
-"Enviamos um e-mail com um link para redefinir sua senha. Verifique "
-"seu e-mail e clique no link para continuar."
 
 #: templates/registration/password_reset_email.html:3
 #, python-format
@@ -184,21 +165,17 @@ msgid ""
 "Estúdio Acompanhe Account,\n"
 "click the link below:"
 msgstr ""
-"Você está recebendo este e-mail porque você pediu uma redefinição de "
-"senha para sua conta de usuário %(user.get_username)s. no "
-"Estúdio Acompanhe.\n"
-"Por favor, vá para a seguinte página e escolher uma nova senha:"
 
 #: templates/registration/password_reset_email.html:8
 msgid ""
 "If clicking the link above doesn't work, please copy and paste the URL in a "
 "new browser\n"
 "window instead."
-msgstr "Clique no link ou copie a URL em seu navegador."
+msgstr ""
 
 #: templates/registration/password_reset_email.html:11
 msgid "Sincerely"
-msgstr "Atenciosamente"
+msgstr ""
 
 #: templates/registration/password_reset_form.html:11
 msgid ""
@@ -206,5 +183,3 @@ msgid ""
 "instructions for\n"
 "        creating a new one."
 msgstr ""
-"Esqueceu sua senha? Digite seu e-mail no campo abaixo e vamos te "
-"enviar instruções para criar um nova."
