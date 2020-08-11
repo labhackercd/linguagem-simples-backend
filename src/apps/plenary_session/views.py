@@ -1,7 +1,9 @@
-from rest_framework import viewsets
+from rest_framework.viewsets import ModelViewSet
+from rest_framework import filters
 from .models import PlenarySession, Publication
 from .serializers import PlenarySessionSerializer, PublicationSerializer
-from django_filters import FilterSet
+from django_filters import rest_framework, FilterSet
+
 
 DATE_FILTERS = ['exact', 'lt', 'gt', 'lte',
                 'gte', 'year__exact', 'month__exact']
@@ -14,11 +16,12 @@ class PlenarySessionFilter(FilterSet):
             'date': DATE_FILTERS}
 
 
-class PlenarySessionViewSet(viewsets.ModelViewSet):
+class PlenarySessionViewSet(ModelViewSet):
     queryset = PlenarySession.objects.all()
     serializer_class = PlenarySessionSerializer
-    filter_backends = ['filters.DjangoFilterBackend', 'filters.OrderingFilter']
-    filter_class = PlenarySessionFilter
+    filter_backends = [rest_framework.DjangoFilterBackend,
+                       filters.OrderingFilter]
+    filterset_class = PlenarySessionFilter
     ordering_fields = ['date']
 
     def perform_create(self, serializer):
@@ -33,11 +36,13 @@ class PublicationFilter(FilterSet):
             'state': ['exact']}
 
 
-class PublicationViewSet(viewsets.ModelViewSet):
+class PublicationViewSet(ModelViewSet):
+    queryset = Publication.objects.all()
     serializer_class = PublicationSerializer
-    filter_backends = ['filters.DjangoFilterBackend', 'filters.OrderingFilter',
-                       'filters.SearchFilter']
-    filter_class = PublicationFilter
+    filter_backends = [rest_framework.DjangoFilterBackend,
+                       filters.OrderingFilter,
+                       filters.SearchFilter]
+    filterset_class = PublicationFilter
     ordering_fields = ['created']
     search_fields = ['content']
 
