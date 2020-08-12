@@ -59,7 +59,6 @@ class Publication(TimestampedMixin):
                              choices=STATE_CHOICES,
                              max_length=120,
                              default='published')
-    content = models.TextField(_('content'))
     session = models.ForeignKey('plenary_session.PlenarySession',
                                 on_delete=models.CASCADE,
                                 related_name="publications",
@@ -68,6 +67,16 @@ class Publication(TimestampedMixin):
                                on_delete=models.PROTECT,
                                related_name="publications",
                                verbose_name=_('author'))
+    content = models.TextField(_('content'), null=True, blank=True)
+    tweet_url = models.URLField(max_length = 200,
+                                verbose_name=_('tweet url'),
+                                null=True,
+                                blank=True)
+    image = models.ImageField(upload_to ='uploads/',
+                              verbose_name=_('image'),
+                              null=True,
+                              blank=True)
+
 
     class Meta:
         verbose_name = _('publication')
