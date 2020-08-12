@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-10 18:13-0300\n"
+"POT-Creation-Date: 2020-08-12 10:12-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -78,43 +78,59 @@ msgstr ""
 msgid "closed session"
 msgstr ""
 
-#: apps/plenary_session/models.py:34
+#: apps/plenary_session/models.py:33
 msgid "location"
 msgstr "localização"
 
-#: apps/plenary_session/models.py:44 apps/plenary_session/models.py:65
+#: apps/plenary_session/models.py:35
+msgid "date"
+msgstr ""
+
+#: apps/plenary_session/models.py:36
+msgid "type_session"
+msgstr ""
+
+#: apps/plenary_session/models.py:39
+msgid "situation_session"
+msgstr ""
+
+#: apps/plenary_session/models.py:42
+msgid "resume"
+msgstr ""
+
+#: apps/plenary_session/models.py:45 apps/plenary_session/models.py:66
 msgid "plenary session"
 msgstr ""
 
-#: apps/plenary_session/models.py:45
+#: apps/plenary_session/models.py:46
 msgid "plenary sessions"
 msgstr ""
 
-#: apps/plenary_session/models.py:53
+#: apps/plenary_session/models.py:54
 msgid "published"
 msgstr ""
 
-#: apps/plenary_session/models.py:54
+#: apps/plenary_session/models.py:55
 msgid "inactive"
 msgstr ""
 
-#: apps/plenary_session/models.py:57
+#: apps/plenary_session/models.py:58
 msgid "state"
 msgstr ""
 
-#: apps/plenary_session/models.py:61
+#: apps/plenary_session/models.py:62
 msgid "content"
 msgstr ""
 
-#: apps/plenary_session/models.py:69
+#: apps/plenary_session/models.py:70
 msgid "author"
 msgstr ""
 
-#: apps/plenary_session/models.py:72
+#: apps/plenary_session/models.py:73
 msgid "publication"
 msgstr ""
 
-#: apps/plenary_session/models.py:73
+#: apps/plenary_session/models.py:74
 msgid "publications"
 msgstr ""
 
@@ -136,16 +152,16 @@ msgid ""
 "        "
 msgstr ""
 
-#: templates/registration/password_reset_confirm.html:8
-#: templates/registration/password_reset_confirm.html:16
+#: templates/registration/password_reset_confirm.html:7
+#: templates/registration/password_reset_confirm.html:15
 msgid "New password"
 msgstr ""
 
-#: templates/registration/password_reset_confirm.html:18
+#: templates/registration/password_reset_confirm.html:17
 msgid "Confirm password:"
 msgstr ""
 
-#: templates/registration/password_reset_confirm.html:20
+#: templates/registration/password_reset_confirm.html:19
 msgid "Set password"
 msgstr ""
 
