@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
+from django.core.exceptions import ValidationError
+from django.db.models import Q
 
 
 class TimestampedMixin(models.Model):
@@ -79,8 +81,24 @@ class Publication(TimestampedMixin):
 
 
     class Meta:
+        constraints = [
+            models.CheckConstraint(
+                check=~Q(content__exact='') |
+                      Q(tweet_url__isnull=False) |
+                      ~Q(image__exact=''),
+                name='not_content_tweet_image_null'
+            )
+        ]
         verbose_name = _('publication')
         verbose_name_plural = _('publications')
+
+    def clean(self):
+        super().clean()
+        if (bool(self.content) is False and
+            self.tweet_url is None and
+            bool(self.image) is False):
+            raise ValidationError(
+                _('Content or tweet URL or image are required'))
 
     def __str__(self):
         return self.created.strftime("%d/%m/%Y, %H:%M:%S")
