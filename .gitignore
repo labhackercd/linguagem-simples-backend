@@ -8,8 +8,8 @@ media
 
 # Mac OS related files #
 .DS_Store
-./src/.DS_Store
-./src/static/.DS_Store
+src/.DS_Store
+src/static/.DS_Store
 
 # Backup files #
 *.bak
