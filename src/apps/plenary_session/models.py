@@ -70,22 +70,19 @@ class Publication(TimestampedMixin):
                                related_name="publications",
                                verbose_name=_('author'))
     content = models.TextField(_('content'), null=True, blank=True)
-    tweet_url = models.URLField(max_length = 200,
+    tweet_url = models.URLField(max_length=200,
                                 verbose_name=_('tweet url'),
-                                null=True,
-                                blank=True)
-    image = models.ImageField(upload_to ='uploads/',
+                                null=True, blank=True)
+    image = models.ImageField(upload_to='uploads/',
                               verbose_name=_('image'),
-                              null=True,
-                              blank=True)
-
+                              null=True, blank=True)
 
     class Meta:
         constraints = [
             models.CheckConstraint(
-                check=~Q(content__exact='') |
-                      Q(tweet_url__isnull=False) |
-                      ~Q(image__exact=''),
+                check=~Q(content__exact='')
+                | Q(tweet_url__isnull=False)
+                | ~Q(image__exact=''),
                 name='not_content_tweet_image_null'
             )
         ]
@@ -96,7 +93,7 @@ class Publication(TimestampedMixin):
         super().clean()
         if (bool(self.content) is False and
             self.tweet_url is None and
-            bool(self.image) is False):
+                bool(self.image) is False):
             raise ValidationError(
                 _('Content or tweet URL or image are required'))
 
