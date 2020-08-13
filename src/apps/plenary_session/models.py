@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
+from django.core.exceptions import ValidationError
+from django.db.models import Q
 
 
 class TimestampedMixin(models.Model):
@@ -59,7 +61,6 @@ class Publication(TimestampedMixin):
                              choices=STATE_CHOICES,
                              max_length=120,
                              default='published')
-    content = models.TextField(_('content'))
     session = models.ForeignKey('plenary_session.PlenarySession',
                                 on_delete=models.CASCADE,
                                 related_name="publications",
@@ -68,10 +69,33 @@ class Publication(TimestampedMixin):
                                on_delete=models.PROTECT,
                                related_name="publications",
                                verbose_name=_('author'))
+    content = models.TextField(_('content'), null=True, blank=True)
+    tweet_url = models.URLField(max_length=200,
+                                verbose_name=_('tweet url'),
+                                null=True, blank=True)
+    image = models.ImageField(upload_to='uploads/',
+                              verbose_name=_('image'),
+                              null=True, blank=True)
 
     class Meta:
+        constraints = [
+            models.CheckConstraint(
+                check=~Q(content__exact='')
+                | Q(tweet_url__isnull=False)
+                | ~Q(image__exact=''),
+                name='not_content_tweet_image_null'
+            )
+        ]
         verbose_name = _('publication')
         verbose_name_plural = _('publications')
+
+    def clean(self):
+        super().clean()
+        if (bool(self.content) is False and
+            self.tweet_url is None and
+                bool(self.image) is False):
+            raise ValidationError(
+                _('Content or tweet URL or image are required'))
 
     def __str__(self):
         return self.created.strftime("%d/%m/%Y, %H:%M:%S")

@@ -6,6 +6,8 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 import json
+from django.db import IntegrityError
+from django.core.exceptions import ValidationError
 
 from .models import PlenarySession, Publication
 
@@ -167,6 +169,23 @@ def test_publication_create():
 
 
 @pytest.mark.django_db
+def test_publication_integrity_error():
+    with pytest.raises(IntegrityError) as excinfo:
+        mixer.blend(Publication, content='', tweet_url=None, image=None)
+    assert 'not_content_tweet_image_null' in str(excinfo.value)
+
+
+@pytest.mark.django_db
+def test_publication_validation_error():
+    with pytest.raises(ValidationError) as excinfo:
+        user = mixer.blend(get_user_model())
+        session = mixer.blend(PlenarySession)
+        publication = Publication.objects.create(author=user, session=session)
+        publication.clean()
+    assert 'Content or tweet URL or image are required' in str(excinfo.value)
+
+
+@pytest.mark.django_db
 def test_publication_str():
     publication = mixer.blend(Publication)
     assert publication.__str__() == '%s' % (
@@ -177,6 +196,8 @@ def test_publication_str():
 def test_publication_create_url(api_client, get_or_create_token):
     session = mixer.blend(PlenarySession)
     data = {
+        'image': '',
+        'tweet_url': '',
         'content': 'teste',
         'session': session.id
     }
@@ -188,6 +209,79 @@ def test_publication_create_url(api_client, get_or_create_token):
     assert response.status_code == 201
     assert request['content'] == 'teste'
     assert request['state'] == 'published'
+
+
+@pytest.mark.django_db
+def test_publication_validate_required_fields(api_client, get_or_create_token):
+    session = mixer.blend(PlenarySession)
+    data = {
+        'image': '',
+        'tweet_url': '',
+        'content': '',
+        'session': session.id
+    }
+    url = reverse('publications-list')
+    api_client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(
+        get_or_create_token))
+    response = api_client.post(url, data=data)
+    request = json.loads(response.content)
+    assert response.status_code == 400
+    assert request['non_field_errors'] == [
+        'Content or tweet URL or image are required']
+
+
+@pytest.mark.django_db
+def test_publication_keyerror_content(api_client, get_or_create_token):
+    session = mixer.blend(PlenarySession)
+    data = {
+        'image': '',
+        'tweet_url': '',
+        'session': session.id
+    }
+    url = reverse('publications-list')
+    api_client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(
+        get_or_create_token))
+    response = api_client.post(url, data=data)
+    request = json.loads(response.content)
+    assert response.status_code == 400
+    assert request['non_field_errors'] == [
+        "'content' are required in json object"]
+
+
+@pytest.mark.django_db
+def test_publication_keyerror_image(api_client, get_or_create_token):
+    session = mixer.blend(PlenarySession)
+    data = {
+        'content': '',
+        'tweet_url': '',
+        'session': session.id
+    }
+    url = reverse('publications-list')
+    api_client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(
+        get_or_create_token))
+    response = api_client.post(url, data=data)
+    request = json.loads(response.content)
+    assert response.status_code == 400
+    assert request['non_field_errors'] == [
+        "'image' are required in json object"]
+
+
+@pytest.mark.django_db
+def test_publication_keyerror_tweet_url(api_client, get_or_create_token):
+    session = mixer.blend(PlenarySession)
+    data = {
+        'content': '',
+        'image': '',
+        'session': session.id
+    }
+    url = reverse('publications-list')
+    api_client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(
+        get_or_create_token))
+    response = api_client.post(url, data=data)
+    request = json.loads(response.content)
+    assert response.status_code == 400
+    assert request['non_field_errors'] == [
+        "'tweet_url' are required in json object"]
 
 
 @pytest.mark.django_db

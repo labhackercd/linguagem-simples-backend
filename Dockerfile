@@ -6,7 +6,8 @@ RUN apk add --no-cache tzdata && \
     cp /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime && \
     echo "America/Sao_Paulo" > /etc/timezone
 
-RUN apk update && apk add postgresql-dev python3-dev gcc musl-dev git
+RUN apk update && apk add postgresql-dev python3-dev gcc musl-dev git \
+    jpeg-dev zlib-dev
 RUN apk add --no-cache bash 
 
 RUN mkdir -p /var/labhacker/$PROJECT
