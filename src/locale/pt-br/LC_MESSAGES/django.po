@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-10 18:13-0300\n"
+"POT-Creation-Date: 2020-08-12 10:12-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,100 +20,182 @@ msgstr ""
 #: apps/api_ditec/views.py:30 apps/api_ditec/views.py:50
 #: apps/api_ditec/views.py:70 apps/api_ditec/views.py:90
 msgid "It is necessary to pass search"
-msgstr "É necessário informar uma palavra para pesquisar"
+msgstr ""
 
 #: apps/api_ditec/views.py:105 apps/api_ditec/views.py:121
 msgid "Error not found results"
-msgstr "Erro, não foram encontrados resultados"
+msgstr ""
 
 #: apps/authentication/models.py:8
 msgid "editor"
-msgstr "editor"
+msgstr ""
 
 #: apps/authentication/models.py:15
 msgid "user"
-msgstr "usuário"
+msgstr ""
 
 #: apps/authentication/models.py:16
 msgid "users"
-msgstr "usuários"
+msgstr ""
 
 #: apps/plenary_session/models.py:7
 msgid "created"
-msgstr "criado"
+msgstr ""
 
 #: apps/plenary_session/models.py:9
 msgid "modified"
-msgstr "modificado"
+msgstr ""
 
 #: apps/plenary_session/models.py:22
 msgid "plenary"
-msgstr "Plenário"
+msgstr ""
 
 #: apps/plenary_session/models.py:23
 msgid "virtual session"
-msgstr "Sessão virtual"
+msgstr ""
 
 #: apps/plenary_session/models.py:24
 msgid "presential session"
-msgstr "Sessão presencial"
+msgstr ""
 
 #: apps/plenary_session/models.py:26
 msgid "pré session"
-msgstr "Pré sessão"
+msgstr ""
 
 #: apps/plenary_session/models.py:27
 msgid "started session"
-msgstr "Sessão iniciada"
+msgstr ""
 
 #: apps/plenary_session/models.py:28
 msgid "started votation"
-msgstr "Votação iniciada"
+msgstr ""
 
 #: apps/plenary_session/models.py:29
 msgid "next topic"
-msgstr "Próxima pauta"
+msgstr ""
 
 #: apps/plenary_session/models.py:30
 msgid "closed session"
-msgstr "Sessão encerrada"
+msgstr ""
 
-#: apps/plenary_session/models.py:34
+#: apps/plenary_session/models.py:33
 msgid "location"
 msgstr "localização"
 
-#: apps/plenary_session/models.py:44 apps/plenary_session/models.py:65
+#: apps/plenary_session/models.py:35
+msgid "date"
+msgstr ""
+
+#: apps/plenary_session/models.py:36
+msgid "type_session"
+msgstr ""
+
+#: apps/plenary_session/models.py:39
+msgid "situation_session"
+msgstr ""
+
+#: apps/plenary_session/models.py:42
+msgid "resume"
+msgstr ""
+
+#: apps/plenary_session/models.py:45 apps/plenary_session/models.py:66
 msgid "plenary session"
-msgstr "Sessão de plenário"
+msgstr ""
 
-#: apps/plenary_session/models.py:45
+#: apps/plenary_session/models.py:46
 msgid "plenary sessions"
-msgstr "Sessões de plenário"
-
-#: apps/plenary_session/models.py:53
-msgid "published"
-msgstr "publicado"
+msgstr ""
 
 #: apps/plenary_session/models.py:54
+msgid "published"
+msgstr ""
+
+#: apps/plenary_session/models.py:55
 msgid "inactive"
-msgstr "inativo"
+msgstr ""
 
-#: apps/plenary_session/models.py:57
+#: apps/plenary_session/models.py:58
 msgid "state"
-msgstr "estado"
+msgstr ""
 
-#: apps/plenary_session/models.py:61
+#: apps/plenary_session/models.py:62
 msgid "content"
-msgstr "conteúdo"
+msgstr ""
 
-#: apps/plenary_session/models.py:69
+#: apps/plenary_session/models.py:70
 msgid "author"
-msgstr "autor"
-
-#: apps/plenary_session/models.py:72
-msgid "publication"
-msgstr "publicação"
+msgstr ""
 
 #: apps/plenary_session/models.py:73
+msgid "publication"
+msgstr ""
+
+#: apps/plenary_session/models.py:74
 msgid "publications"
-msgstr "publicações"
+msgstr ""
+
+#: templates/registration/password_reset_complete.html:4
+#: templates/registration/password_reset_complete.html:9
+#: templates/registration/password_reset_confirm.html:4
+#: templates/registration/password_reset_done.html:4
+#: templates/registration/password_reset_done.html:9
+#: templates/registration/password_reset_form.html:4
+#: templates/registration/password_reset_form.html:9
+#: templates/registration/password_reset_form.html:19
+msgid "Reset password"
+msgstr ""
+
+#: templates/registration/password_reset_complete.html:11
+msgid ""
+"\n"
+"        Your password has been set. You may go ahead and sign in now.\n"
+"        "
+msgstr ""
+
+#: templates/registration/password_reset_confirm.html:7
+#: templates/registration/password_reset_confirm.html:15
+msgid "New password"
+msgstr ""
+
+#: templates/registration/password_reset_confirm.html:17
+msgid "Confirm password:"
+msgstr ""
+
+#: templates/registration/password_reset_confirm.html:19
+msgid "Set password"
+msgstr ""
+
+#: templates/registration/password_reset_done.html:11
+msgid ""
+"\n"
+"        We've emailed you instructions for setting your password, if an "
+"account exists with the email you entered.\n"
+"        You should receive them shortly.\n"
+"        "
+msgstr ""
+
+#: templates/registration/password_reset_email.html:3
+#, python-format
+msgid ""
+"To initiate the password reset process for your %(user.get_username)s "
+"Estúdio Acompanhe Account,\n"
+"click the link below:"
+msgstr ""
+
+#: templates/registration/password_reset_email.html:8
+msgid ""
+"If clicking the link above doesn't work, please copy and paste the URL in a "
+"new browser\n"
+"window instead."
+msgstr ""
+
+#: templates/registration/password_reset_email.html:11
+msgid "Sincerely"
+msgstr ""
+
+#: templates/registration/password_reset_form.html:11
+msgid ""
+"Forgot your password? Enter your email in the form below and we'll send you "
+"instructions for\n"
+"        creating a new one."
+msgstr ""
