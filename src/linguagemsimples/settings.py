@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 from decouple import config, Csv
 import os
 from datetime import timedelta
-
+from watchman import constants as watchman_constants
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'corsheaders',
     'django_filters',
+    'watchman',
 
     # Local apps
     'apps.authentication',
@@ -213,3 +214,6 @@ CORS_URLS_REGEX = r'^/api/.*$'
 
 # URL AND PATHS EXTERNAL API DITEC
 API_DITEC = config('API_DITEC', default='http://localhost:8000')
+
+WATCHMAN_TOKENS = config('WATCHMAN_TOKES', default='key')
+WATCHMAN_TOKEN_NAME = config('WATCHMAN_TOKEN_NAME', default='wt')
