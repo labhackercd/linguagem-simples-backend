@@ -217,3 +217,12 @@ API_DITEC = config('API_DITEC', default='http://localhost:8000')
 
 WATCHMAN_TOKENS = config('WATCHMAN_TOKES', default='key')
 WATCHMAN_TOKEN_NAME = config('WATCHMAN_TOKEN_NAME', default='wt')
+WATCHMAN_CHECKS = watchman_constants.DEFAULT_CHECKS + \
+    ('linguagemsimples.utils.monitor_system.check_used_disk',
+     'linguagemsimples.utils.monitor_system.check_used_memory',
+     'linguagemsimples.utils.monitor_system.check_used_swap',
+     'linguagemsimples.utils.monitor_system.check_used_cpu',
+     'linguagemsimples.utils.monitor_system.check_api_noticias',
+     'linguagemsimples.utils.monitor_system.check_api_programa_tv',
+     'linguagemsimples.utils.monitor_system.check_api_programa_radio',
+     'linguagemsimples.utils.monitor_system.check_api_radioagencia')
