@@ -1,3 +1,9 @@
+PATH_PROGRAMA_RADIO = '/programas-radio/_search'
+PATH_PROGRAMA_TV = '/programas-tv/_search'
+PATH_RADIOAGENCIA = '/radioagencia/_search'
+PATH_NOTICIAS = '/noticias/_search'
+
+
 HEADERS = {'Content-Type': 'application/json'}
 
 DEFAULT_QUERY = '{"query": {\
