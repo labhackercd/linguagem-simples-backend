@@ -9,7 +9,7 @@ class PlenarySessionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PlenarySession
-        fields = '__all__'
+        exclude = ['modified', 'created']
 
 
 class PublicationSerializer(serializers.ModelSerializer):
@@ -17,7 +17,7 @@ class PublicationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Publication
-        fields = '__all__'
+        exclude = ['modified', 'created']
 
     def validate(self, data):
         if not self.instance:

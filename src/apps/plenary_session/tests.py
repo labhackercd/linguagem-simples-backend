@@ -25,6 +25,18 @@ def api_client():
     return APIClient()
 
 
+@pytest.fixture
+def create_plenary_session():
+    author = mixer.blend(get_user_model())
+    plenary_session = PlenarySession.objects.create(author=author,
+                                                    location='plenary',
+                                                    date=datetime.now(),
+                                                    type_session='virtual',
+                                                    situation_session='next_topic',  # NOQA
+                                                    resume='resume of session')
+    return plenary_session
+
+
 @pytest.mark.django_db
 def test_apps():
     from apps.plenary_session.apps import PlenarySessionConfig
@@ -46,61 +58,72 @@ def test_plenary_session_str():
 
 
 @pytest.mark.django_db
-def test_plenary_session_create_erro_location():
-    with pytest.raises(Exception):
-        plenary_session = mixer.blend(PlenarySession, location='ERROR')
+def test_plenary_session_create_erro_location(create_plenary_session):
+    with pytest.raises(ValidationError) as excinfo:
+        plenary_session = create_plenary_session
+        plenary_session.location = 'ERROR'
         plenary_session.full_clean()
+    assert '{\'location\': ["Valor \'ERROR\' não é uma opção válida."]}' in (
+        str(excinfo))
 
 
 @pytest.mark.django_db
-def test_plenary_session_create_erro_date():
-    with pytest.raises(Exception):
-        mixer.blend(PlenarySession, date='')
+def test_plenary_session_create_erro_date(create_plenary_session):
+    with pytest.raises(ValidationError) as excinfo:
+        plenary_session = create_plenary_session
+        plenary_session.date = 'ERROR'
+        plenary_session.full_clean()
+    assert 'date' in str(excinfo)
 
 
 @pytest.mark.django_db
-def test_plenary_session_create_erro_type_session():
-    with pytest.raises(Exception):
-        plenary_session = mixer.blend(PlenarySession, type_session='ERROR')
+def test_plenary_session_create_erro_type_session(create_plenary_session):
+    with pytest.raises(ValidationError) as excinfo:
+        plenary_session = create_plenary_session
+        plenary_session.type_session = 'ERROR'
         plenary_session.full_clean()
+    assert '{\'type_session\': ["Valor \'ERROR\' não é uma opção válida."]}' in (  # NOQA
+        str(excinfo))
 
 
 @pytest.mark.django_db
-def test_plenary_session_create_erro_situation_session():
-    with pytest.raises(Exception):
-        plenary_session = mixer.blend(PlenarySession,
-                                      situation_session='ERROR')
+def test_plenary_session_create_erro_situation_session(create_plenary_session):
+    with pytest.raises(ValidationError) as excinfo:
+        plenary_session = create_plenary_session
+        plenary_session.situation_session = 'ERROR'
         plenary_session.full_clean()
+    assert '{\'situation_session\': ["Valor \'ERROR\' não é uma opção válida."]}' in (  # NOQA
+        str(excinfo))
 
 
 @pytest.mark.django_db
 def test_plenary_session_create_none_location():
-    with pytest.raises(Exception):
+    with pytest.raises(IntegrityError):
         mixer.blend(PlenarySession, location=None)
 
 
 @pytest.mark.django_db
 def test_plenary_session_create_none_date():
-    with pytest.raises(Exception):
+    with pytest.raises(IntegrityError):
         mixer.blend(PlenarySession, date=None)
 
 
 @pytest.mark.django_db
 def test_plenary_session_create_none_type_session():
-    with pytest.raises(Exception):
+    with pytest.raises(IntegrityError):
         mixer.blend(PlenarySession, type_session=None)
 
 
 @pytest.mark.django_db
 def test_plenary_session_create_none_situation_session():
-    with pytest.raises(Exception):
+    with pytest.raises(IntegrityError):
         mixer.blend(PlenarySession,
                     situation_session=None)
 
 
 @pytest.mark.django_db
 def test_plenary_session_create_none_resume():
-    with pytest.raises(Exception):
+    with pytest.raises(IntegrityError):
         mixer.blend(PlenarySession, resume=None)
 
 
@@ -340,7 +363,6 @@ def test_session_plenary_filter_date_url(api_client, get_or_create_token):
     mixer.blend(PlenarySession, date=today)
     url = reverse('sessions-list') + \
         DATE.format(today.strftime('%Y-%m-%d'))
-    print(url)
     api_client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(
         get_or_create_token))
     response = api_client.get(url)
@@ -359,7 +381,6 @@ def test_session_plenary_filter_gte_date_url(api_client, get_or_create_token):
     mixer.blend(PlenarySession, date=today)
     url = reverse('sessions-list') + \
         DATE.format(today.strftime('%Y-%m-%d'))
-    print(url)
     api_client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(
         get_or_create_token))
     response = api_client.get(url)
@@ -378,7 +399,6 @@ def test_session_plenary_filter_lte_date_url(api_client, get_or_create_token):
     mixer.blend(PlenarySession, date=today)
     url = reverse('sessions-list') + \
         DATE.format(yesterday.strftime('%Y-%m-%d'))
-    print(url)
     api_client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(
         get_or_create_token))
     response = api_client.get(url)
