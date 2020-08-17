@@ -6,7 +6,8 @@ from django.contrib.auth import get_user_model
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
-        fields = '__all__'
+        exclude = ('password', 'last_login', 'is_staff', 'is_active',
+                   'date_joined', 'groups', 'user_permissions')
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):

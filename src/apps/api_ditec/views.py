@@ -98,7 +98,6 @@ def get_subjects(path):
                                 headers=HEADERS,
                                 data=query)
 
-    print(response)
     try:
         response = response.json()
     except JSONDecodeError:
