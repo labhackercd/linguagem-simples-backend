@@ -5,11 +5,13 @@ from apps.api_ditec.configs_api import (PATH_NOTICIAS, PATH_PROGRAMA_RADIO,
                                         PATH_PROGRAMA_TV, PATH_RADIOAGENCIA)
 from requests import get
 
+MAX_USAGE = 90.0
+
 
 @check
 def check_used_disk():
     hdd = disk_usage('/').percent
-    if hdd <= 90.0:
+    if hdd <= MAX_USAGE:
         response = {'Storage Disk': {"ok": True}}
     else:
         response = {'Storage Disk': {"ok": False}}
@@ -20,7 +22,7 @@ def check_used_disk():
 @check
 def check_used_memory():
     percent = virtual_memory().percent
-    if percent <= 90.0:
+    if percent <= MAX_USAGE:
         response = {'Virtual Memory': {"ok": True}}
     else:
         response = {'Virtual Memory': {"ok": False}}
@@ -31,7 +33,7 @@ def check_used_memory():
 @check
 def check_used_swap():
     percent = swap_memory().percent
-    if percent <= 90.0:
+    if percent <= MAX_USAGE:
         response = {'Swap Memory': {"ok": True}}
     else:
         response = {'Swap Memory': {"ok": False}}
@@ -42,7 +44,7 @@ def check_used_swap():
 @check
 def check_used_cpu():
     percent = cpu_percent()
-    if percent <= 90.0:
+    if percent <= MAX_USAGE:
         response = {'CPU': {"ok": True}}
     else:
         response = {'CPU': {"ok": False}}
