@@ -293,7 +293,7 @@ def test_get_filter_subjects(api_client, get_or_create_token):
                   settings.API_DITEC + path,
                   json={'response': 'json_test'}, status=201)
 
-    response = get_filter_subjects(path, 'word')
+    response = get_filter_subjects('word', path)
 
     assert response == {'response': 'json_test'}
 
@@ -311,7 +311,7 @@ def test_get_filter_subjects_without_json(api_client, get_or_create_token):
                   settings.API_DITEC + path,
                   status=201)
 
-    response = get_filter_subjects(path, 'word')
+    response = get_filter_subjects('word', path)
 
     assert response == {'error': 'Error not found results'}
 

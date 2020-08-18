@@ -51,4 +51,10 @@ sudo docker-compose up
 sudo docker-compose exec backend sh -c "cd src/ && pytest --cov-report term-missing --cov=apps"
 ```
 
+## Como verificar a integridade dos serviços 
+- É possível verificar como estão os status do serviço que o projeto Linguagem simples depende no seguinte link:
+  - http://localhost.com/health_system/?wt=key
+* Lembrando que é preciso configurar na variável **WATCHMAN_TOKENS** do arquivo **settings.py** qual será o token necessário para acessar essa página
+![](https://raw.githubusercontent.com/wiki/labhackercd/linguagem-simples/images/README/health_system.png)
+
 **A API neste momento já vai estar rodando na porta 8000 do localhost.**
