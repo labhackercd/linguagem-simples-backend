@@ -17,7 +17,7 @@ class PublicationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Publication
-        exclude = ['modified', 'created']
+        exclude = ['modified']
 
     def validate(self, data):
         if not self.instance:
