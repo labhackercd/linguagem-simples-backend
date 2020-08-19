@@ -194,7 +194,7 @@ def test_publication_create():
 @pytest.mark.django_db
 def test_publication_integrity_error():
     with pytest.raises(IntegrityError) as excinfo:
-        mixer.blend(Publication, content='', tweet_url=None, image=None)
+        mixer.blend(Publication, content='', tweet_id=None, image=None)
     assert 'not_content_tweet_image_null' in str(excinfo.value)
 
 
@@ -205,7 +205,7 @@ def test_publication_validation_error():
         session = mixer.blend(PlenarySession)
         publication = Publication.objects.create(author=user, session=session)
         publication.clean()
-    assert 'Content or tweet URL or image are required' in str(excinfo.value)
+    assert 'Content or tweet_id or image are required' in str(excinfo.value)
 
 
 @pytest.mark.django_db
@@ -220,7 +220,7 @@ def test_publication_create_url(api_client, get_or_create_token):
     session = mixer.blend(PlenarySession)
     data = {
         'image': '',
-        'tweet_url': '',
+        'tweet_id': '',
         'content': 'teste',
         'session': session.id
     }
@@ -239,7 +239,7 @@ def test_publication_validate_required_fields(api_client, get_or_create_token):
     session = mixer.blend(PlenarySession)
     data = {
         'image': '',
-        'tweet_url': '',
+        'tweet_id': '',
         'content': '',
         'session': session.id
     }
@@ -250,7 +250,7 @@ def test_publication_validate_required_fields(api_client, get_or_create_token):
     request = json.loads(response.content)
     assert response.status_code == 400
     assert request['non_field_errors'] == [
-        'Content or tweet URL or image are required']
+        'Content or tweet_id or image are required']
 
 
 @pytest.mark.django_db
@@ -258,7 +258,7 @@ def test_publication_keyerror_content(api_client, get_or_create_token):
     session = mixer.blend(PlenarySession)
     data = {
         'image': '',
-        'tweet_url': '',
+        'tweet_id': '',
         'session': session.id
     }
     url = reverse('publications-list')
@@ -276,7 +276,7 @@ def test_publication_keyerror_image(api_client, get_or_create_token):
     session = mixer.blend(PlenarySession)
     data = {
         'content': '',
-        'tweet_url': '',
+        'tweet_id': '',
         'session': session.id
     }
     url = reverse('publications-list')
@@ -290,7 +290,7 @@ def test_publication_keyerror_image(api_client, get_or_create_token):
 
 
 @pytest.mark.django_db
-def test_publication_keyerror_tweet_url(api_client, get_or_create_token):
+def test_publication_keyerror_tweet_id(api_client, get_or_create_token):
     session = mixer.blend(PlenarySession)
     data = {
         'content': '',
@@ -304,7 +304,7 @@ def test_publication_keyerror_tweet_url(api_client, get_or_create_token):
     request = json.loads(response.content)
     assert response.status_code == 400
     assert request['non_field_errors'] == [
-        "'tweet_url' are required in json object"]
+        "'tweet_id' are required in json object"]
 
 
 @pytest.mark.django_db
