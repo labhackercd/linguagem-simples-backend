@@ -7,7 +7,7 @@ RUN apk add --no-cache tzdata && \
     echo "America/Sao_Paulo" > /etc/timezone
 
 RUN apk update && apk add postgresql-dev python3-dev gcc musl-dev git \
-    jpeg-dev zlib-dev
+    jpeg-dev zlib-dev linux-headers
 RUN apk add --no-cache bash 
 
 RUN mkdir -p /var/labhacker/$PROJECT

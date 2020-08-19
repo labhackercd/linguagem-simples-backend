@@ -8,86 +8,59 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .configs_api import (DEFAULT_QUERY, HEADERS, LAST_UPDATE_QUERY,
-                          SEARCH_QUERY)
+                          SEARCH_QUERY, PATH_PROGRAMA_TV, PATH_NOTICIAS,
+                          PATH_PROGRAMA_RADIO, PATH_RADIOAGENCIA)
 
 
 class ListNews(APIView):
-    path = '/noticias/_search'
-
     def get(self, request):
-        subjects = get_subjects(self.path)
+        subjects = get_subjects(PATH_NOTICIAS)
         return Response(subjects)
 
 
 class SearchNews(APIView):
-    path = '/noticias/_search'
-
     def get(self, request, format=None):
         words = request.query_params.get('search', None)
-        if words:
-            subjects = get_filter_subjects(self.path, words)
-        else:
-            subjects = {'error': _('It is necessary to pass search')}
+        subjects = get_filter_subjects(words, PATH_NOTICIAS)
         return Response(subjects)
 
 
 class ListRadioagency(APIView):
-    path = '/radioagencia/_search'
-
     def get(self, request):
-        subjects = get_subjects(self.path)
+        subjects = get_subjects(PATH_RADIOAGENCIA)
         return Response(subjects)
 
 
 class SearchRadioagency(APIView):
-    path = '/radioagencia/_search'
-
     def get(self, request, format=None):
         words = request.query_params.get('search', None)
-        if words:
-            subjects = get_filter_subjects(self.path, words)
-        else:
-            subjects = {'error': _('It is necessary to pass search')}
+        subjects = get_filter_subjects(words, PATH_RADIOAGENCIA)
         return Response(subjects)
 
 
 class ListTvCamara(APIView):
-    path = '/programas-tv/_search'
-
     def get(self, request):
-        subjects = get_subjects(self.path)
+        subjects = get_subjects(PATH_PROGRAMA_TV)
         return Response(subjects)
 
 
 class SearchTvCamara(APIView):
-    path = '/programas-tv/_search'
-
     def get(self, request, format=None):
         words = request.query_params.get('search', None)
-        if words:
-            subjects = get_filter_subjects(self.path, words)
-        else:
-            subjects = {'error': _('It is necessary to pass search')}
+        subjects = get_filter_subjects(words, PATH_PROGRAMA_TV)
         return Response(subjects)
 
 
 class ListRadioCamara(APIView):
-    path = '/programas-radio/_search'
-
     def get(self, request):
-        subjects = get_subjects(self.path)
+        subjects = get_subjects(PATH_PROGRAMA_RADIO)
         return Response(subjects)
 
 
 class SearchRadioCamara(APIView):
-    path = '/programas-radio/_search'
-
     def get(self, request, format=None):
         words = request.query_params.get('search', None)
-        if words:
-            subjects = get_filter_subjects(self.path, words)
-        else:
-            subjects = {'error': _('It is necessary to pass search')}
+        subjects = get_filter_subjects(words, PATH_PROGRAMA_RADIO)
         return Response(subjects)
 
 
@@ -106,17 +79,19 @@ def get_subjects(path):
     return response
 
 
-def get_filter_subjects(path, words):
+def get_filter_subjects(words, path):
+    if words:
+        query = DEFAULT_QUERY.replace('replace_query', SEARCH_QUERY)
+        query = query.replace('words', words)
 
-    query = DEFAULT_QUERY.replace('replace_query', SEARCH_QUERY)
-    query = query.replace('words', words)
-
-    response = requests.request('POST', settings.API_DITEC + path,
-                                headers=HEADERS,
-                                data=query)
-    try:
-        response = response.json()
-    except JSONDecodeError:
-        response = {'error': _('Error not found results')}
+        response = requests.request('POST', settings.API_DITEC + path,
+                                    headers=HEADERS,
+                                    data=query)
+        try:
+            response = response.json()
+        except JSONDecodeError:
+            response = {'error': _('Error not found results')}
+    else:
+        response = {'error': _('It is necessary to pass search')}
 
     return response
