@@ -17,16 +17,16 @@ class PublicationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Publication
-        exclude = ['modified', 'created']
+        exclude = ['modified']
 
     def validate(self, data):
         if not self.instance:
             try:
                 if (bool(data['content']) is False and
-                    bool(data['tweet_url']) is False and
+                    bool(data['tweet_id']) is False and
                         bool(data['image']) is False):
                     raise serializers.ValidationError(
-                        _('Content or tweet URL or image are required'))
+                        _('Content or tweet_id or image are required'))
             except KeyError as e:
                 raise serializers.ValidationError(
                     _('{} are required in json object'.format(e)))
