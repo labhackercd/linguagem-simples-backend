@@ -4,3 +4,4 @@ exclude =
     __pycache__,
     src/manage.py,
     */migrations/*
+    mock*
