@@ -208,6 +208,17 @@ SIMPLE_JWT = {
     'TOKEN_TYPE_CLAIM': 'token_type',
 }
 
+# DRF-YASG
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'api_key': {
+            'type': 'apiKey',
+            'in': 'header',
+            'name': 'Authorization'
+        }
+    },
+    'USE_SESSION_AUTH': False,
+}
 # CORS
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_URLS_REGEX = r'^/api/.*$'
@@ -225,4 +236,5 @@ WATCHMAN_CHECKS = watchman_constants.DEFAULT_CHECKS + \
      'linguagemsimples.utils.monitor_system.check_api_noticias',
      'linguagemsimples.utils.monitor_system.check_api_programa_tv',
      'linguagemsimples.utils.monitor_system.check_api_programa_radio',
-     'linguagemsimples.utils.monitor_system.check_api_radioagencia')
+     'linguagemsimples.utils.monitor_system.check_api_radioagencia',
+     'linguagemsimples.utils.monitor_system.check_scrape_acompanhe',)
