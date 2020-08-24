@@ -109,14 +109,13 @@ class SavedContent(TimestampedMixin):
         ('agency', _('Agencia Câmara')),
     )
 
-    content_type = models.CharField(verbose_name=_('state'),
+    content_type = models.CharField(verbose_name=_('content type'),
                                     choices=TYPE_CHOICES,
-                                    max_length=120,
-                                    default='published')
+                                    max_length=120)
     session = models.ForeignKey('plenary_session.PlenarySession',
                                 on_delete=models.CASCADE,
                                 related_name="saved_contents",
-                                verbose_name=_('saved content'))
+                                verbose_name=_('plenary session'))
     title = models.CharField(max_length=200, verbose_name=_('title'))
     url = models.URLField(verbose_name=_('url'))
 
