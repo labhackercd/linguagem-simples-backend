@@ -99,3 +99,31 @@ class Publication(TimestampedMixin):
 
     def __str__(self):
         return self.created.strftime("%d/%m/%Y, %H:%M:%S")
+
+
+class SavedContent(TimestampedMixin):
+    TYPE_CHOICES = (
+        ('news', _('News')),
+        ('tv', _('TV Câmara')),
+        ('radio', _('Radio Câmara')),
+        ('agency', _('Agencia Câmara')),
+    )
+
+    content_type = models.CharField(verbose_name=_('state'),
+                                    choices=TYPE_CHOICES,
+                                    max_length=120,
+                                    default='published')
+    session = models.ForeignKey('plenary_session.PlenarySession',
+                                on_delete=models.CASCADE,
+                                related_name="saved_contents",
+                                verbose_name=_('saved content'))
+    title = models.CharField(max_length=200, verbose_name=_('title'))
+    url = models.URLField(verbose_name=_('url'))
+
+    class Meta:
+        verbose_name = _('saved content')
+        verbose_name_plural = _('saved contents')
+        unique_together = ('content_type', 'session', 'title', 'url')
+
+    def __str__(self):
+        return self.title

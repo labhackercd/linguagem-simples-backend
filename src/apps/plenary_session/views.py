@@ -1,7 +1,8 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework import filters
-from .models import PlenarySession, Publication
-from .serializers import PlenarySessionSerializer, PublicationSerializer
+from .models import PlenarySession, Publication, SavedContent
+from .serializers import (PlenarySessionSerializer, PublicationSerializer,
+                          SavedContentSerializer)
 from django_filters import rest_framework, FilterSet
 
 
@@ -48,3 +49,22 @@ class PublicationViewSet(ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
+
+
+class SavedContentFilter(FilterSet):
+    class Meta:
+        model = SavedContent
+        fields = {
+            'created': DATE_FILTERS,
+            'content_type': ['exact']}
+
+
+class SavedContentViewSet(ModelViewSet):
+    queryset = SavedContent.objects.all()
+    serializer_class = SavedContentSerializer
+    filter_backends = [rest_framework.DjangoFilterBackend,
+                       filters.OrderingFilter,
+                       filters.SearchFilter]
+    filterset_class = SavedContentFilter
+    ordering_fields = ['created']
+    search_fields = ['title']

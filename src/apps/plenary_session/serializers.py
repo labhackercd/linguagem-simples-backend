@@ -1,6 +1,6 @@
 from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
-from .models import PlenarySession, Publication
+from .models import PlenarySession, Publication, SavedContent
 from apps.authentication.serializers import UserSerializer
 
 
@@ -31,3 +31,10 @@ class PublicationSerializer(serializers.ModelSerializer):
                 raise serializers.ValidationError(
                     _('{} are required in json object'.format(e)))
         return data
+
+
+class SavedContentSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = SavedContent
+        exclude = ['modified']

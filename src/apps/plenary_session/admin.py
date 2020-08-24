@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import PlenarySession, Publication
+from .models import PlenarySession, Publication, SavedContent
 
 
 @admin.register(PlenarySession)
@@ -33,3 +33,17 @@ class PublicationAdmin(admin.ModelAdmin):
         'image',
     )
     list_filter = ('created', 'modified', 'session', 'author')
+
+
+@admin.register(SavedContent)
+class SavedContentAdmin(admin.ModelAdmin):
+    list_display = (
+        'id',
+        'created',
+        'modified',
+        'content_type',
+        'session',
+        'title',
+        'url',
+    )
+    list_filter = ('created', 'modified', 'session')
