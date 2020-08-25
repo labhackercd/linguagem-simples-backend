@@ -478,4 +478,5 @@ def test_saved_content_integrity_error():
                     content_type=content.content_type,
                     title=content.title,
                     url=content.url)
-    assert 'UNIQUE constraint failed' in str(excinfo.value)
+    assert 'duplicate key value violates unique constraint' in str(
+        excinfo.value)
