@@ -9,7 +9,7 @@ import json
 from django.db import IntegrityError
 from django.core.exceptions import ValidationError
 
-from .models import PlenarySession, Publication
+from .models import PlenarySession, Publication, SavedContent
 
 
 @pytest.fixture
@@ -406,3 +406,77 @@ def test_session_plenary_filter_lte_date_url(api_client, get_or_create_token):
     assert response.status_code == 200
     assert len(respose_json) == 1
     assert PlenarySession.objects.count() == 2
+
+
+@pytest.mark.django_db
+def test_saved_content_create_db():
+    mixer.blend(SavedContent)
+    assert SavedContent.objects.count() == 1
+
+
+@pytest.mark.django_db
+def test_saved_content_str():
+    content = mixer.blend(SavedContent, title='test title')
+    assert content.__str__() == 'test title'
+
+
+@pytest.mark.django_db
+def test_saved_content_create_api(api_client, get_or_create_token):
+    session = mixer.blend(PlenarySession)
+    data = {
+        'content_type': 'tv',
+        'title': 'titulo',
+        'url': 'http://example.com',
+        'session': session.id
+    }
+    url = reverse('saved-contents-list')
+    api_client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(
+        get_or_create_token))
+    response = api_client.post(url, data=data)
+    request = json.loads(response.content)
+    assert response.status_code == 201
+    assert request['title'] == 'titulo'
+    assert request['content_type'] == 'tv'
+    assert request['url'] == 'http://example.com'
+
+
+@pytest.mark.django_db
+def test_unique_saved_content(api_client, get_or_create_token):
+    session = mixer.blend(PlenarySession)
+    content_type = 'tv'
+    title = 'teste'
+    url = 'http://teste.com'
+
+    mixer.blend(SavedContent,
+                session=session,
+                content_type=content_type,
+                title=title,
+                url=url)
+    data = {
+        'content_type': content_type,
+        'title': title,
+        'url': url,
+        'session': session.id
+    }
+    url = reverse('saved-contents-list')
+    api_client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(
+        get_or_create_token))
+    response = api_client.post(url, data=data)
+    request = json.loads(response.content)
+    assert response.status_code == 400
+    assert request["non_field_errors"] == [
+        "Os campos content_type, session, title, url devem criar um set único."
+    ]
+
+
+@pytest.mark.django_db
+def test_saved_content_integrity_error():
+    content = mixer.blend(SavedContent)
+    with pytest.raises(IntegrityError) as excinfo:
+        mixer.blend(SavedContent,
+                    session=content.session,
+                    content_type=content.content_type,
+                    title=content.title,
+                    url=content.url)
+    assert 'duplicate key value violates unique constraint' in str(
+        excinfo.value)
