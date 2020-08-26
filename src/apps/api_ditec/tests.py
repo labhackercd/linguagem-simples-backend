@@ -6,7 +6,9 @@ import responses
 from mixer.backend.django import mixer
 from rest_framework_simplejwt.tokens import RefreshToken
 from .views import get_subjects, get_filter_subjects
+from linguagemsimples.utils.scrape import Scrape
 from django.conf import settings
+from .mock_site_acompanhe import HTML_SCRAPE
 
 
 @pytest.fixture
@@ -392,3 +394,69 @@ def test_search_radiocamara_without_word(api_client, get_or_create_token):
 
     assert response.json() == {'error': 'It is necessary to pass search'}
     assert len(responses.calls) == 0
+
+
+@pytest.mark.django_db
+@responses.activate
+def test_video_session(api_client, get_or_create_token):
+    url = 'https://www.camara.leg.br/evento-legislativo/1234'
+    responses.add(responses.GET,
+                  url,
+                  body=HTML_SCRAPE,
+                  status=200)
+    path = reverse('videos-session', args=[1234])
+    api_client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(
+        get_or_create_token))
+    response = api_client.get(path)
+
+    assert response.status_code == 200
+    assert len(responses.calls) == 1
+    assert 'url' in response.json()['1']
+    assert 'description' in response.json()['1']
+    assert 'thumbnail' in response.json()['1']
+
+
+@pytest.mark.django_db
+@responses.activate
+def test_video_session_dont_exist(api_client, get_or_create_token):
+    url = 'https://www.camara.leg.br/evento-legislativo/1234'
+    responses.add(responses.GET,
+                  url,
+                  status=404)
+    path = reverse('videos-session', args=[1234])
+    api_client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(
+        get_or_create_token))
+    response = api_client.get(path)
+
+    assert response.status_code == 200
+    assert len(responses.calls) == 1
+    assert response.json() == {'error': 'Videos sessions not found!'}
+
+
+@pytest.mark.django_db
+@responses.activate
+def test_get_webpage_videos():
+    url = 'https://www.camara.leg.br/evento-legislativo/1234'
+    responses.add(responses.GET,
+                  url,
+                  body=HTML_SCRAPE,
+                  status=200)
+
+    scrape = Scrape()
+    response = scrape.get_webpage_videos(1234)
+
+    assert response.status_code == 200
+    assert len(responses.calls) == 1
+    assert response.text == HTML_SCRAPE
+    assert len(responses.calls) == 1
+
+
+@pytest.mark.django_db
+@responses.activate
+def test_scraping_videos():
+    scrape = Scrape()
+    response = scrape.scraping_videos(HTML_SCRAPE)
+
+    assert 'url' in response[1]
+    assert 'description' in response[1]
+    assert 'thumbnail' in response[1]

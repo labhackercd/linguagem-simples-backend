@@ -4,6 +4,7 @@ from django.conf import settings
 from apps.api_ditec.configs_api import (PATH_NOTICIAS, PATH_PROGRAMA_RADIO,
                                         PATH_PROGRAMA_TV, PATH_RADIOAGENCIA)
 from requests import get
+from .scrape import Scrape
 
 MAX_USAGE = 90.0
 
@@ -91,5 +92,19 @@ def check_api_radioagencia():
         response = {'API RADIOAGENCIA': {"ok": True}}
     else:
         response = {'API RADIOAGENCIA': {"ok": False}}
+
+    return response
+
+
+@check
+def check_scrape_acompanhe():
+    scrape = Scrape()
+    page = scrape.get_webpage_videos(59733)
+    videos = scrape.scraping_videos(page.text)
+    if 'url' in videos[1] and 'description' in videos[1] and \
+       'thumbnail' in videos[1]:
+        response = {'Scrape Acompanhe': {"ok": True}}
+    else:
+        response = {'Scrape Acompanhe': {"ok": False}}
 
     return response

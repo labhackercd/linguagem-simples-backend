@@ -70,8 +70,8 @@ class Publication(TimestampedMixin):
                                related_name="publications",
                                verbose_name=_('author'))
     content = models.TextField(_('content'), null=True, blank=True)
-    tweet_url = models.URLField(max_length=200,
-                                verbose_name=_('tweet url'),
+    tweet_id = models.CharField(max_length=200,
+                                verbose_name=_('tweet id'),
                                 null=True, blank=True)
     image = models.ImageField(upload_to='uploads/',
                               verbose_name=_('image'),
@@ -81,7 +81,7 @@ class Publication(TimestampedMixin):
         constraints = [
             models.CheckConstraint(
                 check=~Q(content__exact='')
-                | Q(tweet_url__isnull=False)
+                | Q(tweet_id__isnull=False)
                 | ~Q(image__exact=''),
                 name='not_content_tweet_image_null'
             )
@@ -92,10 +92,37 @@ class Publication(TimestampedMixin):
     def clean(self):
         super().clean()
         if (bool(self.content) is False and
-            self.tweet_url is None and
+            self.tweet_id is None and
                 bool(self.image) is False):
             raise ValidationError(
-                _('Content or tweet URL or image are required'))
+                _('Content or tweet_id or image are required'))
 
     def __str__(self):
         return self.created.strftime("%d/%m/%Y, %H:%M:%S")
+
+
+class SavedContent(TimestampedMixin):
+    TYPE_CHOICES = (
+        ('news', _('News')),
+        ('tv', _('TV Câmara')),
+        ('radio', _('Radio Câmara')),
+        ('agency', _('Agencia Câmara')),
+    )
+
+    content_type = models.CharField(verbose_name=_('content type'),
+                                    choices=TYPE_CHOICES,
+                                    max_length=120)
+    session = models.ForeignKey('plenary_session.PlenarySession',
+                                on_delete=models.CASCADE,
+                                related_name="saved_contents",
+                                verbose_name=_('plenary session'))
+    title = models.CharField(max_length=200, verbose_name=_('title'))
+    url = models.URLField(verbose_name=_('url'))
+
+    class Meta:
+        verbose_name = _('saved content')
+        verbose_name_plural = _('saved contents')
+        unique_together = ('content_type', 'session', 'title', 'url')
+
+    def __str__(self):
+        return self.title
