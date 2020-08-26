@@ -13,11 +13,9 @@ services:
     environment:
       <<: *common-variables
       PGDATA: "/var/lib/postgresql/data/"
-    volumes:
-      - pg_data:/var/lib/postgresql/data/
   backend:
     container_name: linguagem-simples-backend
-    build: .
+    image: labhackercd/linguagem-simples-backend:latest
     command: ./start_backend.sh
     restart: on-failure
     environment:
