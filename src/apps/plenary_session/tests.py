@@ -219,6 +219,7 @@ def test_publication_str():
 def test_publication_create_url(api_client, get_or_create_token):
     session = mixer.blend(PlenarySession)
     data = {
+        'title': 'teste',
         'image': '',
         'tweet_id': '',
         'content': 'teste',
@@ -230,6 +231,7 @@ def test_publication_create_url(api_client, get_or_create_token):
     response = api_client.post(url, data=data)
     request = json.loads(response.content)
     assert response.status_code == 201
+    assert request['title'] == 'teste'
     assert request['content'] == 'teste'
     assert request['state'] == 'published'
 
