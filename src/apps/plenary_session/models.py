@@ -76,6 +76,9 @@ class Publication(TimestampedMixin):
     image = models.ImageField(upload_to='uploads/',
                               verbose_name=_('image'),
                               null=True, blank=True)
+    title = models.CharField(max_length=200,
+                             verbose_name=_('title'),
+                             null=True, blank=True)
 
     class Meta:
         constraints = [
