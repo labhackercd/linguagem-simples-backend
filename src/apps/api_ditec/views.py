@@ -117,4 +117,4 @@ class VideosSession(APIView):
             videos_json = scrape.scraping_videos(page.text)
         else:
             videos_json = {'error': _('Videos sessions not found!')}
-        return JsonResponse(videos_json)
+        return JsonResponse(videos_json, safe=False)
