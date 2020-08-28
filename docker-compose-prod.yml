@@ -26,8 +26,6 @@ services:
       HOST: "db"
       PORT: 5432
       DATABASE_ENGINE: "postgresql"
-    volumes:
-      - .:/var/labhacker/linguagem_simples_backend
     ports:
       - "8000:8000"
     depends_on:

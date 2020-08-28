@@ -33,7 +33,8 @@ def create_plenary_session():
                                                     date=datetime.now(),
                                                     type_session='virtual',
                                                     situation_session='next_topic',  # NOQA
-                                                    resume='resume of session')
+                                                    resume='resume of session',
+                                                    enable=True)
     return plenary_session
 
 
@@ -133,7 +134,8 @@ def test_session_plenary_create_url(api_client, get_or_create_token):
             'date': datetime.today().strftime('%Y-%m-%d'),
             'type_session': 'virtual',
             'situation_session': 'pre_session',
-            'resume': 'Resume of session'}
+            'resume': 'Resume of session',
+            'enable': 'True'}
     url = reverse('sessions-list')
     api_client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(
         get_or_create_token))
@@ -202,10 +204,20 @@ def test_publication_integrity_error():
 def test_publication_validation_error():
     with pytest.raises(ValidationError) as excinfo:
         user = mixer.blend(get_user_model())
-        session = mixer.blend(PlenarySession)
+        session = mixer.blend(PlenarySession, enable=True)
         publication = Publication.objects.create(author=user, session=session)
         publication.clean()
     assert 'Content or tweet_id or image are required' in str(excinfo.value)
+
+
+@pytest.mark.django_db
+def test_publication_validation_error_disable_session():
+    with pytest.raises(ValidationError) as excinfo:
+        user = mixer.blend(get_user_model())
+        session = mixer.blend(PlenarySession, enable=False)
+        publication = Publication.objects.create(author=user, session=session)
+        publication.clean()
+    assert 'Only session enable can have publication' in str(excinfo.value)
 
 
 @pytest.mark.django_db
@@ -217,7 +229,8 @@ def test_publication_str():
 
 @pytest.mark.django_db
 def test_publication_create_url(api_client, get_or_create_token):
-    session = mixer.blend(PlenarySession)
+    session = mixer.blend(PlenarySession, enable=True)
+
     data = {
         'title': 'teste',
         'image': '',
@@ -225,6 +238,7 @@ def test_publication_create_url(api_client, get_or_create_token):
         'content': 'teste',
         'session': session.id
     }
+
     url = reverse('publications-list')
     api_client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(
         get_or_create_token))

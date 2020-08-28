@@ -25,6 +25,7 @@ class Migration(migrations.Migration):
                 ('type_session', models.CharField(choices=[('virtual', 'virtual session'), ('presential', 'presential session')], max_length=20, verbose_name='type_session')),
                 ('situation_session', models.CharField(choices=[('pre_session', 'pré session'), ('started_session', 'started session'), ('started_votation', 'started votation'), ('next_topic', 'next topic'), ('closed_session', 'closed session')], max_length=20, verbose_name='situation_session')),
                 ('resume', models.TextField(blank=True, default='', verbose_name='resume')),
+                ('enable', models.BooleanField(default=False, verbose_name='enable')),
                 ('author', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='plenary_sessions', to=settings.AUTH_USER_MODEL)),
             ],
             options={
