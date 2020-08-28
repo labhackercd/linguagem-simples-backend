@@ -14,16 +14,25 @@ class PlenarySessionFilter(FilterSet):
     class Meta:
         model = PlenarySession
         fields = {
-            'date': DATE_FILTERS}
+            'date': DATE_FILTERS,
+            'created': DATE_FILTERS,
+            'modified': DATE_FILTERS,
+            'id': ['exact'],
+            'location': ['exact'],
+            'type_session': ['exact'],
+            'situation_session': ['exact'],
+            'enable': ['exact']}
 
 
 class PlenarySessionViewSet(ModelViewSet):
     queryset = PlenarySession.objects.all()
     serializer_class = PlenarySessionSerializer
     filter_backends = [rest_framework.DjangoFilterBackend,
-                       filters.OrderingFilter]
+                       filters.OrderingFilter,
+                       filters.SearchFilter]
     filterset_class = PlenarySessionFilter
-    ordering_fields = ['date']
+    ordering_fields = '__all__' 
+    search_fields = ['resume']
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
@@ -34,6 +43,10 @@ class PublicationFilter(FilterSet):
         model = Publication
         fields = {
             'created': DATE_FILTERS,
+            'modified': DATE_FILTERS,
+            'id': ['exact'],
+            'session__id': ['exact'],
+            'author__id': ['exact'],
             'state': ['exact']}
 
 
@@ -44,8 +57,8 @@ class PublicationViewSet(ModelViewSet):
                        filters.OrderingFilter,
                        filters.SearchFilter]
     filterset_class = PublicationFilter
-    ordering_fields = ['created']
-    search_fields = ['content']
+    ordering_fields = '__all__'
+    search_fields = ['content', 'tweet_id', 'image', 'title']
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
@@ -56,6 +69,8 @@ class SavedContentFilter(FilterSet):
         model = SavedContent
         fields = {
             'created': DATE_FILTERS,
+            'id': ['exact'],
+            'session__id': ['exact'],
             'content_type': ['exact']}
 
 
@@ -66,5 +81,5 @@ class SavedContentViewSet(ModelViewSet):
                        filters.OrderingFilter,
                        filters.SearchFilter]
     filterset_class = SavedContentFilter
-    ordering_fields = ['created']
-    search_fields = ['title']
+    ordering_fields = '__all__'
+    search_fields = ['title', 'url']
