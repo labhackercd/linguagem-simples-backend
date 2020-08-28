@@ -31,7 +31,7 @@ class PlenarySessionViewSet(ModelViewSet):
                        filters.OrderingFilter,
                        filters.SearchFilter]
     filterset_class = PlenarySessionFilter
-    ordering_fields = '__all__' 
+    ordering_fields = '__all__'
     search_fields = ['resume']
 
     def perform_create(self, serializer):
