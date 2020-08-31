@@ -21,7 +21,8 @@ class PlenarySessionFilter(FilterSet):
             'location': ['exact'],
             'type_session': ['exact'],
             'situation_session': ['exact'],
-            'enable': ['exact']}
+            'enable': ['exact'],
+            'id_session_dados_abertos': ['exact']}
 
 
 class PlenarySessionViewSet(ModelViewSet):

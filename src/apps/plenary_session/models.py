@@ -43,6 +43,11 @@ class PlenarySession(TimestampedMixin):
                                          choices=list_situation_session)
     resume = models.TextField(verbose_name=_('resume'), blank=True, default='')
     enable = models.BooleanField(verbose_name=_('enable'), default=False)
+    id_session_dados_abertos = models.CharField(verbose_name=_(
+                                                'id_session_dados_abertos'),
+                                                max_length=20,
+                                                null=True, blank=True,
+                                                default=None)
 
     class Meta:
         verbose_name = _('plenary session')
