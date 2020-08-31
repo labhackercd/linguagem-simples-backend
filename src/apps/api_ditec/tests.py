@@ -9,6 +9,7 @@ from .views import get_subjects, get_filter_subjects
 from linguagemsimples.utils.scrape import Scrape
 from django.conf import settings
 from .mock_site_acompanhe import HTML_SCRAPE
+from bs4 import BeautifulSoup
 
 
 @pytest.fixture
@@ -411,9 +412,12 @@ def test_video_session(api_client, get_or_create_token):
 
     assert response.status_code == 200
     assert len(responses.calls) == 1
-    assert 'url' in response.json()['1']
-    assert 'description' in response.json()['1']
-    assert 'thumbnail' in response.json()['1']
+    assert 'url' in response.json()[1]
+    assert 'author' in response.json()[1]
+    assert 'legend' in response.json()[1]
+    assert 'schedule' in response.json()[1]
+    assert 'duration' in response.json()[1]
+    assert 'thumbnail' in response.json()[1]
 
 
 @pytest.mark.django_db
@@ -433,7 +437,6 @@ def test_video_session_dont_exist(api_client, get_or_create_token):
     assert response.json() == {'error': 'Videos sessions not found!'}
 
 
-@pytest.mark.django_db
 @responses.activate
 def test_get_webpage_videos():
     url = 'https://www.camara.leg.br/evento-legislativo/1234'
@@ -451,12 +454,37 @@ def test_get_webpage_videos():
     assert len(responses.calls) == 1
 
 
-@pytest.mark.django_db
-@responses.activate
 def test_scraping_videos():
     scrape = Scrape()
     response = scrape.scraping_videos(HTML_SCRAPE)
 
     assert 'url' in response[1]
-    assert 'description' in response[1]
+    assert 'author' in response[1]
+    assert 'legend' in response[1]
+    assert 'schedule' in response[1]
+    assert 'duration' in response[1]
     assert 'thumbnail' in response[1]
+
+
+def test_format_videos():
+    scrape = Scrape()
+    videos = scrape.scraping_videos(HTML_SCRAPE)
+    soup = BeautifulSoup(HTML_SCRAPE, 'html.parser')
+    videos = soup.find_all(class_='chamada__link-trecho linkReproduzir')
+
+    response = scrape.format_videos(videos[0])
+
+    assert 'url' in response
+    assert 'author' in response
+    assert 'legend' in response
+    assert 'schedule' in response
+    assert 'duration' in response
+    assert 'thumbnail' in response
+
+
+def test_error_format_videos():
+    scrape = Scrape()
+    response = scrape.format_videos('')
+
+    assert 'error' in response
+    assert response['error'] == 'Error get description'

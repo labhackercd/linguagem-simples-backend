@@ -42,10 +42,17 @@ class PlenarySession(TimestampedMixin):
                                          max_length=20,
                                          choices=list_situation_session)
     resume = models.TextField(verbose_name=_('resume'), blank=True, default='')
+    enable = models.BooleanField(verbose_name=_('enable'), default=False)
 
     class Meta:
         verbose_name = _('plenary session')
         verbose_name_plural = _('plenary sessions')
+
+    def clean(self):
+        super().clean()
+        if not self.enable and len(self.resume):
+            raise ValidationError(
+                _('Only session enable can have resume'))
 
     def __str__(self):
         return (self.type_session + ' - ' + self.date.strftime("%d/%m/%Y"))
@@ -76,6 +83,9 @@ class Publication(TimestampedMixin):
     image = models.ImageField(upload_to='uploads/',
                               verbose_name=_('image'),
                               null=True, blank=True)
+    title = models.CharField(max_length=200,
+                             verbose_name=_('title'),
+                             null=True, blank=True)
 
     class Meta:
         constraints = [
@@ -91,8 +101,11 @@ class Publication(TimestampedMixin):
 
     def clean(self):
         super().clean()
-        if (bool(self.content) is False and
-            self.tweet_id is None and
+        if not self.session.enable:
+            raise ValidationError(
+                _('Only session enable can have publication'))
+        elif (bool(self.content) is False and
+              self.tweet_id is None and
                 bool(self.image) is False):
             raise ValidationError(
                 _('Content or tweet_id or image are required'))

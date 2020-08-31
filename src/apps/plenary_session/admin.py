@@ -31,6 +31,7 @@ class PublicationAdmin(admin.ModelAdmin):
         'content',
         'tweet_id',
         'image',
+        'title',
     )
     list_filter = ('created', 'modified', 'session', 'author')
 

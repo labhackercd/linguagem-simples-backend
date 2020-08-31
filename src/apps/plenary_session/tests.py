@@ -33,7 +33,8 @@ def create_plenary_session():
                                                     date=datetime.now(),
                                                     type_session='virtual',
                                                     situation_session='next_topic',  # NOQA
-                                                    resume='resume of session')
+                                                    resume='resume of session',
+                                                    enable=True)
     return plenary_session
 
 
@@ -97,6 +98,15 @@ def test_plenary_session_create_erro_situation_session(create_plenary_session):
 
 
 @pytest.mark.django_db
+def test_plenary_session_disable_resume_error():
+    with pytest.raises(ValidationError) as excinfo:
+        plenary_session = mixer.blend(
+            PlenarySession, enable=False, resume="ABC")
+        plenary_session.full_clean()
+    assert 'Only session enable can have resume' in str(excinfo.value)
+
+
+@pytest.mark.django_db
 def test_plenary_session_create_none_location():
     with pytest.raises(IntegrityError):
         mixer.blend(PlenarySession, location=None)
@@ -133,7 +143,8 @@ def test_session_plenary_create_url(api_client, get_or_create_token):
             'date': datetime.today().strftime('%Y-%m-%d'),
             'type_session': 'virtual',
             'situation_session': 'pre_session',
-            'resume': 'Resume of session'}
+            'resume': 'Resume of session',
+            'enable': 'True'}
     url = reverse('sessions-list')
     api_client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(
         get_or_create_token))
@@ -145,6 +156,25 @@ def test_session_plenary_create_url(api_client, get_or_create_token):
     assert request['type_session'] == 'virtual'
     assert request['situation_session'] == 'pre_session'
     assert request['resume'] == 'Resume of session'
+
+
+@pytest.mark.django_db
+def test_session_keyerror_resume(api_client, get_or_create_token):
+    data = {'location': 'plenary',
+            'date': datetime.today().strftime('%Y-%m-%d'),
+            'type_session': 'virtual',
+            'situation_session': 'pre_session',
+            'resume': 'Resume of session',
+            'enable': 'False'}
+    url = reverse('sessions-list')
+    api_client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(
+        get_or_create_token))
+    response = api_client.post(url, data=data)
+    request = json.loads(response.content)
+
+    assert response.status_code == 400
+    assert request['non_field_errors'] == [
+        "Only session enable can have resume"]
 
 
 @pytest.mark.django_db
@@ -202,10 +232,20 @@ def test_publication_integrity_error():
 def test_publication_validation_error():
     with pytest.raises(ValidationError) as excinfo:
         user = mixer.blend(get_user_model())
-        session = mixer.blend(PlenarySession)
+        session = mixer.blend(PlenarySession, enable=True)
         publication = Publication.objects.create(author=user, session=session)
         publication.clean()
     assert 'Content or tweet_id or image are required' in str(excinfo.value)
+
+
+@pytest.mark.django_db
+def test_publication_validation_error_disable_session():
+    with pytest.raises(ValidationError) as excinfo:
+        user = mixer.blend(get_user_model())
+        session = mixer.blend(PlenarySession, enable=False)
+        publication = Publication.objects.create(author=user, session=session)
+        publication.clean()
+    assert 'Only session enable can have publication' in str(excinfo.value)
 
 
 @pytest.mark.django_db
@@ -217,19 +257,23 @@ def test_publication_str():
 
 @pytest.mark.django_db
 def test_publication_create_url(api_client, get_or_create_token):
-    session = mixer.blend(PlenarySession)
+    session = mixer.blend(PlenarySession, enable=True)
+
     data = {
+        'title': 'teste',
         'image': '',
         'tweet_id': '',
         'content': 'teste',
         'session': session.id
     }
+
     url = reverse('publications-list')
     api_client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(
         get_or_create_token))
     response = api_client.post(url, data=data)
     request = json.loads(response.content)
     assert response.status_code == 201
+    assert request['title'] == 'teste'
     assert request['content'] == 'teste'
     assert request['state'] == 'published'
 
@@ -251,6 +295,25 @@ def test_publication_validate_required_fields(api_client, get_or_create_token):
     assert response.status_code == 400
     assert request['non_field_errors'] == [
         'Content or tweet_id or image are required']
+
+
+@pytest.mark.django_db
+def test_publication_keyerror_disable_session(api_client, get_or_create_token):
+    session = mixer.blend(PlenarySession, enable=False)
+    data = {
+        'image': '',
+        'content': 'teste',
+        'tweet_id': '123123',
+        'session': session.id
+    }
+    url = reverse('publications-list')
+    api_client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(
+        get_or_create_token))
+    response = api_client.post(url, data=data)
+    request = json.loads(response.content)
+    assert response.status_code == 400
+    assert request['non_field_errors'] == [
+        "Only session enable can have publication"]
 
 
 @pytest.mark.django_db
