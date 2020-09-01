@@ -101,8 +101,9 @@ def check_scrape_acompanhe():
     scrape = Scrape()
     page = scrape.get_webpage_videos(59733)
     videos = scrape.scraping_videos(page.text)
-    if 'url' in videos[1] and 'description' in videos[1] and \
-       'thumbnail' in videos[1]:
+    if 'url' in videos[1] and 'author' in videos[1] and \
+       'thumbnail' in videos[1] and 'author' in videos[1] and \
+       'author' in videos[1] and 'duration' in videos[1]:
         response = {'Scrape Acompanhe': {"ok": True}}
     else:
         response = {'Scrape Acompanhe': {"ok": False}}
