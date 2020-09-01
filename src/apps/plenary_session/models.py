@@ -35,16 +35,16 @@ class PlenarySession(TimestampedMixin):
     location = models.CharField(verbose_name=_('location'), max_length=20,
                                 choices=list_location)
     date = models.DateField(verbose_name=_('date'))
-    type_session = models.CharField(verbose_name=_('type_session'),
+    type_session = models.CharField(verbose_name=_('type session'),
                                     max_length=20,
                                     choices=list_type_session)
-    situation_session = models.CharField(verbose_name=_('situation_session'),
+    situation_session = models.CharField(verbose_name=_('situation session'),
                                          max_length=20,
                                          choices=list_situation_session)
     resume = models.TextField(verbose_name=_('resume'), blank=True, default='')
     enable = models.BooleanField(verbose_name=_('enable'), default=False)
     id_session_dados_abertos = models.CharField(verbose_name=_(
-                                                'id_session_dados_abertos'),
+                                                'id session dados abertos'),
                                                 max_length=20,
                                                 null=True, blank=True,
                                                 default=None)
