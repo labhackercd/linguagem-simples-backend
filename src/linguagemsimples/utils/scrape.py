@@ -1,6 +1,8 @@
 from requests import get
+from rest_framework.exceptions import ParseError
 from bs4 import BeautifulSoup
 from typing import List
+from django.utils.translation import gettext_lazy as _
 
 
 class Scrape(object):
@@ -35,3 +37,19 @@ class Scrape(object):
             response = {'error': 'Error get description'}
 
         return response
+
+    def get_file_video(self, url: str) -> str:
+        if 'https://www.camara.leg.br/evento-legislativo' in url:
+            page = get(url)
+            return page
+        else:
+            raise ParseError(detail=_('Invalid url information'), code=400)
+
+    def scraping_file_video(self, page: str) -> List:
+        soup = BeautifulSoup(page, 'html.parser')
+
+        video = soup.find('source')
+
+        url_file = video['src']
+
+        return url_file
