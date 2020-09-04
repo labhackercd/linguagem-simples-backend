@@ -2602,3 +2602,48 @@ HTML_SCRAPE = '''<html class="js js flexbox supports cssfilters" lang="pt-br"><!
   
 
 </body></html>'''
+
+
+HTML_FILE_VIDEO = '''<html><head><style></style></head><body class="vsc-initialized"><div class="vsc-controller" data-vscid="p9rv6dfod"></div><video id="video-player" class="mejs__player" controls="" poster="https://www.camara.leg.br/tema/assets/images/_placeholders/video-placeholder.png" data-mejsoptions="{&quot;stretching&quot;:&quot;responsive&quot;}" data-vscid="p9rv6dfod">
+    <source src="https://vod2.camara.leg.br/playlist/z7olw-vipoftz0fbfb_lra.mp4" type="video/mp4;codecs=&quot;avc1.4D401E, mp4a.40.2&quot;">
+    <p>Seu navegador não consegue mostrar o vídeo aqui. Você pode tentar fazer o seu <a href="https://vod2.camara.leg.br/cod/rest/download?p=z7olw-vipoftz0fbfb_lra">download</a>.</p>
+</video>
+            
+<div class="g-l-assista__acessorio-principal">
+        <span class="texto">Paulo Ganime</span>
+
+        <h3 class="video-principal__titulo">Deputado - 21:27:30</h3>
+    <div class="g-l-assista__principal-acoes">
+        <a href="http://imagem.camara.gov.br/internet/audio/Resultado.asp?txtCodigo=523169" class="g-l-assista__principal-acao">
+            <span class="icone-audio" aria-hidden="true"></span>
+            <span>Áudio</span>
+        </a>
+
+        <button id="compartilhar-principal" class="button button--link g-l-assista__principal-acao js-acao-compartilhamento" data-url-compartilhamento="https://www.camara.leg.br/evento-legislativo/">
+            <span class="icone-compartilhar" aria-hidden="true"></span>
+            <span>Compartilhar</span>
+        </button>
+
+        <a class="g-l-assista__principal-acao" href="https://vod2.camara.leg.br/cod/rest/download?p=z7olw-vipoftz0fbfb_lra">
+            <span class="icone-download" aria-hidden="true"></span>
+            <span>Baixar</span>
+        </a>
+    </div>
+</div><div class="nsc-content-camera nsc-hide">
+    <div class="nsc-content-camera-buttons" flex="none" layout="row" layout-align="start start">
+        <button class="nsc-content-camera-button nsc-hide" type="button" id="nsc_video_camera_collapse">
+            <span class="nsc-icon nsc-icon-panel-collapse"></span>
+        </button>
+        <button class="nsc-content-camera-button" type="button" id="nsc_video_camera_expand">
+            <span class="nsc-icon nsc-icon-panel-expand"></span>
+        </button>
+        <button class="nsc-content-camera-button" type="button" id="nsc_video_camera_close">
+            <span class="nsc-icon nsc-icon-panel-close"></span>
+        </button>
+    </div>
+    <div class="nsc-content-camera-container">
+        <div class="nsc-content-camera-shadow"></div>
+    </div>
+</div>
+</body></html>
+'''

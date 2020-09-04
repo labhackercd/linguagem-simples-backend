@@ -1,7 +1,7 @@
 from requests import get
-from rest_framework.exceptions import ParseError
+from rest_framework.exceptions import ParseError, NotFound
 from bs4 import BeautifulSoup
-from typing import List
+from typing import List, Dict
 from django.utils.translation import gettext_lazy as _
 
 
@@ -21,7 +21,7 @@ class Scrape(object):
 
         return json_video
 
-    def format_videos(self, video):
+    def format_videos(self, video) -> Dict:
         try:
             description = video.get_text().strip()
             description = description.split("\n")
@@ -43,13 +43,16 @@ class Scrape(object):
             page = get(url)
             return page
         else:
-            raise ParseError(detail=_('Invalid url information'), code=400)
+            raise NotFound(detail=_('Invalid url information'), code=404)
 
     def scraping_file_video(self, page: str) -> List:
         soup = BeautifulSoup(page, 'html.parser')
 
         video = soup.find('source')
 
-        url_file = video['src']
+        try:
+            url_file = video['src']
+        except TypeError:
+            raise ParseError(detail=_('Error parser file video'), code=400)
 
         return url_file
