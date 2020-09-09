@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import (ListNews, SearchNews, ListRadioagency, SearchRadioagency,
                     ListTvCamara, SearchTvCamara, ListRadioCamara,
-                    SearchRadioCamara, VideosSession)
+                    SearchRadioCamara, VideosSession, FileVideoSession)
 
 urlpatterns = [
     path('news/', ListNews.as_view(), name='news'),
@@ -17,4 +17,6 @@ urlpatterns = [
          name='radiocamara-search'),
     path('videos-session/<int:id_video>/',
          VideosSession.as_view(), name='videos-session'),
+    path('file-video/',
+         FileVideoSession.as_view(), name='file-video'),
 ]
