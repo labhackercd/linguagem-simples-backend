@@ -9,7 +9,7 @@ class Scrape(object):
 
     def get_webpage_videos(self, ID_SESSION: int) -> str:
         URL = 'https://www.camara.leg.br/evento-legislativo/{}'
-        page = get(URL.format(ID_SESSION))
+        page = get(URL.format(ID_SESSION), verify=False)
         return page
 
     def scraping_videos(self, page: str) -> List:
@@ -40,7 +40,7 @@ class Scrape(object):
 
     def get_file_video(self, url: str) -> str:
         if 'https://www.camara.leg.br/evento-legislativo' in url:
-            page = get(url)
+            page = get(url, verify=False)
             return page
         else:
             raise NotFound(detail=_('Invalid url information'), code=404)
