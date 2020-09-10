@@ -76,8 +76,7 @@ def get_subjects(path: str) -> DictResponse:
     query = DEFAULT_QUERY.replace('replace_query', LAST_UPDATE_QUERY)
 
     response = requests.request('POST', settings.API_DITEC + path,
-                                headers=HEADERS,
-                                data=query)
+                                headers=HEADERS, data=query, verify=False)
 
     try:
         response = response.json()
@@ -93,8 +92,7 @@ def get_filter_subjects(words: str, path: str) -> DictResponse:
         query = query.replace('words', words)
 
         response = requests.request('POST', settings.API_DITEC + path,
-                                    headers=HEADERS,
-                                    data=query)
+                                    headers=HEADERS, data=query, verify=False)
         try:
             response = response.json()
         except JSONDecodeError:

@@ -30,6 +30,7 @@ services:
       DATABASE_ENGINE: "postgresql"
       WATCHMAN_TOKEN_NAME: "token"
       WATCHMAN_TOKES: "key"
+      SITE_DOMAIN: "http://localhost:8000"
       API_DITEC: "http://localhost:8000"
     volumes:
       - .:/var/labhacker/linguagem_simples_backend
