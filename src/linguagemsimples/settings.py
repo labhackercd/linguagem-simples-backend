@@ -238,3 +238,6 @@ WATCHMAN_CHECKS = watchman_constants.DEFAULT_CHECKS + \
      'linguagemsimples.utils.monitor_system.check_api_programa_radio',
      'linguagemsimples.utils.monitor_system.check_api_radioagencia',
      'linguagemsimples.utils.monitor_system.check_scrape_acompanhe',)
+
+
+SITE_DOMAIN = config('SITE_DOMAIN', default='http://0.0.0.0:8000')
