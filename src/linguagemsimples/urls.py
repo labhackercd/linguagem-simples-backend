@@ -7,6 +7,12 @@ from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
 
+
+if settings.URL_PREFIX:
+    prefix = '%s/' % (settings.URL_PREFIX)
+else:
+    prefix = ''
+
 schema_view = get_schema_view(
     openapi.Info(
         title="Linguagem Simples API",
@@ -18,7 +24,7 @@ schema_view = get_schema_view(
         contact=openapi.Contact(email="labhacker@camara.leg.br"),
         license=openapi.License(name="GNU General Public License v3.0"),
     ),
-    url=settings.SITE_DOMAIN + "/api/",
+    url=settings.SITE_DOMAIN + prefix + "api/",
     public=True,
     permission_classes=(permissions.AllowAny,),
 )
@@ -49,3 +55,7 @@ urlpatterns = [
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,
                           document_root=settings.MEDIA_ROOT)
+
+urlpatterns = [path(prefix, include(urlpatterns))]
+
+admin.site.site_header = 'Linguagem Simples Backend'
