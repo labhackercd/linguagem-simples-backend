@@ -28,6 +28,11 @@ services:
       HOST: "db"
       PORT: 5432
       DATABASE_ENGINE: "postgresql"
+      WATCHMAN_TOKEN_NAME: "token"
+      WATCHMAN_TOKES: "key"
+      URL_PREFIX:
+      SITE_DOMAIN: "http://localhost:8000/"
+      API_DITEC: "http://localhost:8000"
     volumes:
       - .:/var/labhacker/linguagem_simples_backend
     ports:

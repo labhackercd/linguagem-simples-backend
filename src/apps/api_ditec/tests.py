@@ -8,8 +8,9 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from .views import get_subjects, get_filter_subjects
 from linguagemsimples.utils.scrape import Scrape
 from django.conf import settings
-from .mock_site_acompanhe import HTML_SCRAPE
+from .mock_site_acompanhe import HTML_SCRAPE, HTML_FILE_VIDEO
 from bs4 import BeautifulSoup
+from rest_framework.exceptions import NotFound, ParseError
 
 
 @pytest.fixture
@@ -451,7 +452,6 @@ def test_get_webpage_videos():
     assert response.status_code == 200
     assert len(responses.calls) == 1
     assert response.text == HTML_SCRAPE
-    assert len(responses.calls) == 1
 
 
 def test_scraping_videos():
@@ -488,3 +488,111 @@ def test_error_format_videos():
 
     assert 'error' in response
     assert response['error'] == 'Error get description'
+
+
+@pytest.mark.django_db
+@responses.activate
+def test_file_video(api_client, get_or_create_token):
+    url = 'https://www.camara.leg.br/evento-legislativo/59733/sessao/523169/video-trecho/1594254243193'  # NOQA
+    responses.add(responses.GET,
+                  url,
+                  body=HTML_FILE_VIDEO,
+                  status=200)
+
+    path = reverse('file-video')
+    api_client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(
+        get_or_create_token))
+
+    data = {'url': url}
+    response = api_client.post(path, data=data)
+
+    assert response.json() == 'https://vod2.camara.leg.br/playlist/z7olw-vipoftz0fbfb_lra.mp4'  # NOQA
+
+    assert len(responses.calls) == 1
+    assert responses.calls[0].request.url == url
+
+
+@pytest.mark.django_db
+@responses.activate
+def test_file_video_invalid_data(api_client, get_or_create_token):
+    url = 'https://www.camara.leg.br/evento-legislativo/59733/sessao/523169/video-trecho/1594254243193'  # NOQA
+    responses.add(responses.GET,
+                  url,
+                  body=HTML_FILE_VIDEO,
+                  status=200)
+
+    path = reverse('file-video')
+    api_client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(
+        get_or_create_token))
+
+    data = {'': ''}
+    response = api_client.post(path, data=data)
+
+    assert response.json() == {'url': ['Este campo é obrigatório.']}  # NOQA
+    assert len(responses.calls) == 0
+
+
+@pytest.mark.django_db
+@responses.activate
+def test_file_video_url_not_found(api_client, get_or_create_token):
+    url = 'https://www.camara.leg.br/evento-legislativo/invalid_url'  # NOQA
+    responses.add(responses.GET,
+                  url,
+                  body='',
+                  status=400)
+
+    path = reverse('file-video')
+    api_client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(
+        get_or_create_token))
+
+    data = {'url': url}
+    response = api_client.post(path, data=data)
+
+    assert response.json() == {'error': 'File video not found!'}  # NOQA
+    assert len(responses.calls) == 1
+    assert responses.calls[0].request.url == url
+
+
+@responses.activate
+def test_get_file_video():
+    url = 'https://www.camara.leg.br/evento-legislativo/59733/sessao/523169/video-trecho/1594254243193'  # NOQA
+    responses.add(responses.GET,
+                  url,
+                  body=HTML_FILE_VIDEO,
+                  status=200)
+
+    scrape = Scrape()
+    response = scrape.get_file_video(url)
+
+    assert response.status_code == 200
+    assert len(responses.calls) == 1
+    assert response.text == HTML_FILE_VIDEO
+
+
+def test_invalid_url_get_file_video():
+    with pytest.raises(NotFound) as excinfo:
+        url = 'https://www.invalid-url'
+        scrape = Scrape()
+        scrape.get_file_video(url)
+
+    assert excinfo.typename == 'NotFound'
+    assert excinfo.value.status_code == 404
+    assert excinfo.value.detail == 'Invalid url information'
+
+
+@responses.activate
+def test_scraping_file_video():
+    scrape = Scrape()
+    response = scrape.scraping_file_video(HTML_FILE_VIDEO)
+
+    assert response == 'https://vod2.camara.leg.br/playlist/z7olw-vipoftz0fbfb_lra.mp4'  # NOQA
+
+
+def test_invalid_url_scraping_file_video():
+    with pytest.raises(ParseError) as excinfo:
+        scrape = Scrape()
+        scrape.scraping_file_video('')
+
+    assert excinfo.typename == 'ParseError'
+    assert excinfo.value.status_code == 400
+    assert excinfo.value.detail == 'Error parser file video'

@@ -34,7 +34,8 @@ def create_plenary_session():
                                                     type_session='virtual',
                                                     situation_session='next_topic',  # NOQA
                                                     resume='resume of session',
-                                                    enable=True)
+                                                    enable=True,
+                                                    id_session_dados_abertos='1235')  # NOQA
     return plenary_session
 
 
@@ -45,8 +46,10 @@ def test_apps():
 
 
 @pytest.mark.django_db
-def test_plenary_session_create():
-    mixer.blend(PlenarySession)
+def test_default_plenary_session_create():
+    plenary_session = mixer.blend(PlenarySession)
+    assert plenary_session.id_session_dados_abertos is None
+    assert plenary_session.enable is False
     assert PlenarySession.objects.count() == 1
 
 
@@ -467,6 +470,22 @@ def test_session_plenary_filter_lte_date_url(api_client, get_or_create_token):
     response = api_client.get(url)
     respose_json = json.loads(response.content)
     assert response.status_code == 200
+    assert len(respose_json) == 1
+    assert PlenarySession.objects.count() == 2
+
+
+@pytest.mark.django_db
+def test_session_plenary_filter_id_session_dados_abertos_url(api_client, get_or_create_token):  # NOQA
+    PATH = '?id_session_dados_abertos={}'
+    mixer.blend(PlenarySession, id_session_dados_abertos='1234')
+    mixer.blend(PlenarySession, id_session_dados_abertos='4678')
+    url = reverse('sessions-list') + PATH.format('1234')
+    api_client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(
+        get_or_create_token))
+    response = api_client.get(url)
+    respose_json = json.loads(response.content)
+    assert response.status_code == 200
+    assert respose_json[0]['id_session_dados_abertos'] == '1234'
     assert len(respose_json) == 1
     assert PlenarySession.objects.count() == 2
 

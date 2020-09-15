@@ -223,6 +223,9 @@ SWAGGER_SETTINGS = {
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_URLS_REGEX = r'^/api/.*$'
 
+# Url prefix
+URL_PREFIX = config('URL_PREFIX', default='')
+
 # URL AND PATHS EXTERNAL API DITEC
 API_DITEC = config('API_DITEC', default='http://localhost:8000')
 
@@ -238,3 +241,6 @@ WATCHMAN_CHECKS = watchman_constants.DEFAULT_CHECKS + \
      'linguagemsimples.utils.monitor_system.check_api_programa_radio',
      'linguagemsimples.utils.monitor_system.check_api_radioagencia',
      'linguagemsimples.utils.monitor_system.check_scrape_acompanhe',)
+
+
+SITE_DOMAIN = config('SITE_DOMAIN', default='http://0.0.0.0:8000/')

@@ -6,8 +6,10 @@ from django.utils.translation import gettext_lazy as _
 from django.http import JsonResponse
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.generics import GenericAPIView
 from drf_yasg.utils import swagger_auto_schema
 from linguagemsimples.utils.scrape import Scrape
+from .serializers import FileVideoSerializer
 
 
 from .configs_api import (DEFAULT_QUERY, HEADERS, LAST_UPDATE_QUERY,
@@ -74,8 +76,7 @@ def get_subjects(path: str) -> DictResponse:
     query = DEFAULT_QUERY.replace('replace_query', LAST_UPDATE_QUERY)
 
     response = requests.request('POST', settings.API_DITEC + path,
-                                headers=HEADERS,
-                                data=query)
+                                headers=HEADERS, data=query, verify=False)
 
     try:
         response = response.json()
@@ -91,8 +92,7 @@ def get_filter_subjects(words: str, path: str) -> DictResponse:
         query = query.replace('words', words)
 
         response = requests.request('POST', settings.API_DITEC + path,
-                                    headers=HEADERS,
-                                    data=query)
+                                    headers=HEADERS, data=query, verify=False)
         try:
             response = response.json()
         except JSONDecodeError:
@@ -107,8 +107,12 @@ class VideosSession(APIView):
     @swagger_auto_schema(operation_description="Get videos from session. It's \
                          necessary to pass 'id_video' by session ",
                          responses={200: "{'1': {'url': '...',\
-                                                 'decription': '...',\
+                                                 'author': ...,\
+                                                 'legend': ...,\
+                                                 'schedule': ...,\
+                                                 'duration': '...',\
                                                  'thumbnail': '...'}}",
+
                                     404: 'Videos sessions not found!'})
     def get(self, request, id_video, format=None):
         scrape = Scrape()
@@ -118,3 +122,25 @@ class VideosSession(APIView):
         else:
             videos_json = {'error': _('Videos sessions not found!')}
         return JsonResponse(videos_json, safe=False)
+
+
+class FileVideoSession(GenericAPIView):
+    serializer_class = FileVideoSerializer
+
+    @swagger_auto_schema(operation_description="Get url from file specifc video. \
+                         It's necessary to url ",
+                         responses={200: "{'url': '...'}",
+
+                                    404: 'File video not found!'})
+    def post(self, request, format=None):
+        serializer = FileVideoSerializer(data=request.data)
+        if serializer.is_valid() is False:
+            return Response(serializer.errors, status=400)
+        else:
+            scrape = Scrape()
+            page = scrape.get_file_video(serializer.data['url'])
+            if page.status_code == 200:
+                videos_json = scrape.scraping_file_video(page.text)
+            else:
+                videos_json = {'error': _('File video not found!')}
+            return JsonResponse(videos_json, safe=False)
