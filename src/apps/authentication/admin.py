@@ -1,10 +1,9 @@
+from django.contrib.auth.admin import UserAdmin
+from .models import CustomUser
 from django.contrib import admin
 
-from .models import CustomUser
 
-
-@admin.register(CustomUser)
-class CustomUserAdmin(admin.ModelAdmin):
+class CustomUserAdmin(UserAdmin):
     list_display = (
         'id',
         'username',
@@ -22,3 +21,6 @@ class CustomUserAdmin(admin.ModelAdmin):
         'date_joined',
     )
     raw_id_fields = ('groups', 'user_permissions')
+
+
+admin.site.register(CustomUser, CustomUserAdmin)

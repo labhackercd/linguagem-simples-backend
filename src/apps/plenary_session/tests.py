@@ -509,7 +509,8 @@ def test_saved_content_create_api(api_client, get_or_create_token):
         'content_type': 'tv',
         'title': 'titulo',
         'url': 'http://example.com',
-        'session': session.id
+        'session': session.id,
+        'id_saved_content': '123A456'
     }
     url = reverse('saved-contents-list')
     api_client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(
@@ -520,6 +521,7 @@ def test_saved_content_create_api(api_client, get_or_create_token):
     assert request['title'] == 'titulo'
     assert request['content_type'] == 'tv'
     assert request['url'] == 'http://example.com'
+    assert request['id_saved_content'] == '123A456'
 
 
 @pytest.mark.django_db
@@ -538,7 +540,8 @@ def test_unique_saved_content(api_client, get_or_create_token):
         'content_type': content_type,
         'title': title,
         'url': url,
-        'session': session.id
+        'session': session.id,
+        'id_saved_content': '123A456'
     }
     url = reverse('saved-contents-list')
     api_client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(

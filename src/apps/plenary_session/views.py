@@ -83,4 +83,4 @@ class SavedContentViewSet(ModelViewSet):
                        filters.SearchFilter]
     filterset_class = SavedContentFilter
     ordering_fields = '__all__'
-    search_fields = ['title', 'url']
+    search_fields = ['title', 'url', 'id_saved_content']
