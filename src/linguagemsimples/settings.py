@@ -219,9 +219,10 @@ SWAGGER_SETTINGS = {
     },
     'USE_SESSION_AUTH': False,
 }
+
 # CORS
-CORS_ORIGIN_ALLOW_ALL = True
-CORS_URLS_REGEX = r'^/api/.*$'
+CORS_ORIGIN_ALLOW_ALL = config('CORS_ORIGIN_ALLOW_ALL',
+                               cast=bool, default=True)
 
 # Url prefix
 URL_PREFIX = config('URL_PREFIX', default='')
