@@ -223,12 +223,6 @@ SWAGGER_SETTINGS = {
 # CORS
 CORS_ORIGIN_ALLOW_ALL = config('CORS_ORIGIN_ALLOW_ALL',
                                cast=bool, default=True)
-CORS_URLS_REGEX = config('CORS_URLS_REGEX', default=r'^/api/.*$')
-CORS_ALLOWED_ORIGINS  = config(
-    'CORS_ALLOWED_ORIGINS',
-    cast=Csv(lambda x: x.strip().strip(',').strip()),
-    default=''
-)
 
 # Url prefix
 URL_PREFIX = config('URL_PREFIX', default='')
