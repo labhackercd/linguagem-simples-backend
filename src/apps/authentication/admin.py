@@ -4,6 +4,12 @@ from django.contrib import admin
 
 
 class CustomUserAdmin(UserAdmin):
+    fieldsets = UserAdmin.fieldsets + (
+        (None, {'fields': ('profile',)}),
+    )
+    add_fieldsets = UserAdmin.add_fieldsets + (
+        (None, {'fields': ('profile',)}),
+    )
     list_display = (
         'id',
         'username',
