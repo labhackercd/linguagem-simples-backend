@@ -22,17 +22,29 @@ services:
     restart: on-failure
     environment:
       <<: *common-variables
-      SECRET_KEY: "key"
       DEBUG: "True"
+      SECRET_KEY: "key"
+      SITE_ID: 1
       ALLOWED_HOSTS: "*"
+      DATABASE_ENGINE: "postgresql"
       HOST: "db"
       PORT: 5432
-      DATABASE_ENGINE: "postgresql"
-      WATCHMAN_TOKEN_NAME: "token"
-      WATCHMAN_TOKES: "key"
+      LANGUAGE_CODE:
+      TIME_ZONE:
+      STATIC_URL: "/static/"
+      MEDIA_URL: "/media/"
+      EMAIL_HOST:
+      EMAIL_PORT:
+      EMAIL_HOST_USER:
+      EMAIL_HOST_PASSWORD:
+      EMAIL_USE_TLS:
+      DEFAULT_FROM_EMAIL:
+      CORS_ORIGIN_ALLOW_ALL:
       URL_PREFIX:
-      SITE_DOMAIN: "http://localhost:8000/"
       API_DITEC: "http://localhost:8000"
+      WATCHMAN_TOKENS: "key"
+      WATCHMAN_TOKEN_NAME: "wt"
+      SITE_DOMAIN: "http://localhost:8000"
     volumes:
       - .:/var/labhacker/linguagem_simples_backend
     ports:
