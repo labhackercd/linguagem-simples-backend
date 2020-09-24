@@ -136,6 +136,8 @@ class SavedContent(TimestampedMixin):
                                 verbose_name=_('plenary session'))
     title = models.CharField(max_length=200, verbose_name=_('title'))
     url = models.URLField(verbose_name=_('url'))
+    id_saved_content = models.CharField(max_length=20,
+                                        verbose_name=_('id saved content'))
 
     class Meta:
         verbose_name = _('saved content')

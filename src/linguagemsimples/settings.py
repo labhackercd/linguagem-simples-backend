@@ -219,9 +219,10 @@ SWAGGER_SETTINGS = {
     },
     'USE_SESSION_AUTH': False,
 }
+
 # CORS
-CORS_ORIGIN_ALLOW_ALL = True
-CORS_URLS_REGEX = r'^/api/.*$'
+CORS_ORIGIN_ALLOW_ALL = config('CORS_ORIGIN_ALLOW_ALL',
+                               cast=bool, default=True)
 
 # Url prefix
 URL_PREFIX = config('URL_PREFIX', default='')
@@ -229,7 +230,7 @@ URL_PREFIX = config('URL_PREFIX', default='')
 # URL AND PATHS EXTERNAL API DITEC
 API_DITEC = config('API_DITEC', default='http://localhost:8000')
 
-WATCHMAN_TOKENS = config('WATCHMAN_TOKES', default='key')
+WATCHMAN_TOKENS = config('WATCHMAN_TOKENS', default='key')
 WATCHMAN_TOKEN_NAME = config('WATCHMAN_TOKEN_NAME', default='wt')
 WATCHMAN_CHECKS = watchman_constants.DEFAULT_CHECKS + \
     ('linguagemsimples.utils.monitor_system.check_used_disk',
