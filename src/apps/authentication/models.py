@@ -4,12 +4,14 @@ from django.db import models
 
 
 class CustomUser(AbstractUser):
+    USERNAME_FIELD = 'email'
     PROFILE_CHOICES = (
         ('editor', _('editor')),
     )
-
+    email = models.EmailField(_('email address'), unique=True)
     profile = models.CharField(choices=PROFILE_CHOICES, max_length=120,
                                default='editor')
+    REQUIRED_FIELDS = ['username']
 
     class Meta:
         verbose_name = _('user')
