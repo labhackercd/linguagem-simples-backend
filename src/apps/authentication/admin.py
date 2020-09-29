@@ -8,7 +8,7 @@ class CustomUserAdmin(UserAdmin):
         (None, {'fields': ('profile',)}),
     )
     add_fieldsets = UserAdmin.add_fieldsets + (
-        (None, {'fields': ('profile',)}),
+        (None, {'fields': ('email', 'profile')}),
     )
     list_display = (
         'id',

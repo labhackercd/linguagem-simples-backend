@@ -22,7 +22,7 @@ def get_jwt_response(api_client, test_password):
     user.set_password(test_password)
     user.save()
     data = {
-        'username': user.username,
+        'email': user.email,
         'password': test_password
     }
     url = reverse('token-create')

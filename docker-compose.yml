@@ -41,10 +41,10 @@ services:
       DEFAULT_FROM_EMAIL:
       CORS_ORIGIN_ALLOW_ALL:
       URL_PREFIX:
-      API_DITEC: "http://localhost:8000"
+      API_DITEC: "http://localhost:8000/"
       WATCHMAN_TOKENS: "key"
       WATCHMAN_TOKEN_NAME: "wt"
-      SITE_DOMAIN: "http://localhost:8000"
+      SITE_DOMAIN: "http://localhost:8000/"
     volumes:
       - .:/var/labhacker/linguagem_simples_backend
     ports:
