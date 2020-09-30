@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-29 17:06-0300\n"
+"POT-Creation-Date: 2020-09-30 10:42-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -226,8 +226,7 @@ msgstr "Url informada inválida"
 msgid "Error parser file video"
 msgstr "Error ao realizar parser do arquivo de vídeo"
 
-#: templates/registration/password_reset_complete.html:4
-#: templates/registration/password_reset_complete.html:9
+#: templates/registration/password_reset_complete.html:5
 #: templates/registration/password_reset_confirm.html:4
 #: templates/registration/password_reset_done.html:4
 #: templates/registration/password_reset_done.html:9
@@ -237,11 +236,10 @@ msgstr "Error ao realizar parser do arquivo de vídeo"
 msgid "Reset password"
 msgstr "Resetar senha"
 
-#: templates/registration/password_reset_complete.html:11
-msgid ""
-"\n"
-"        Your password has been set. You may go ahead and sign in now.\n"
-"        "
+#: templates/registration/password_reset_complete.html:7
+#, fuzzy
+#| msgid "Your password has been set. You may go ahead and sign in now.\n"
+msgid "Your password has been set. You may go ahead and sign in now."
 msgstr "Sua senha foi definida. Você pode ir em frente e fazer login agora.\n"
 
 #: templates/registration/password_reset_confirm.html:7
@@ -264,22 +262,30 @@ msgid ""
 "account exists with the email you entered.\n"
 "        You should receive them shortly.\n"
 "        "
-msgstr "\n Enviamos por e-mail instruções para definir sua senha, se existir uma conta com o e-mail que você digitou.\n Você deve recebê-los em breve."
+msgstr ""
+"\n"
+" Enviamos por e-mail instruções para definir sua senha, se existir uma conta "
+"com o e-mail que você digitou.\n"
+" Você deve recebê-los em breve."
 
 #: templates/registration/password_reset_email.html:3
 #, python-format
 msgid ""
-"To initiate the password reset process for your %(user.get_username)s "
-"Estúdio Acompanhe Account,\n"
+"To initiate the password reset process for your %(user_name)s Estúdio "
+"Acompanhe Account,\n"
 "click the link below:"
-msgstr "Para iniciar o processo de resete de senha do seu usuário %(user.get_username) no Estúdio Acompanhe, clique no link abaixo:"
+msgstr ""
+"Para iniciar o processo de resete de senha do seu usuário %(user_name)s no "
+"Estúdio Acompanhe, clique no link abaixo:"
 
 #: templates/registration/password_reset_email.html:8
 msgid ""
 "If clicking the link above doesn't work, please copy and paste the URL in a "
 "new browser\n"
 "window instead."
-msgstr "Se você está clicano no link e o mesmo não está funcionando, por favor copie e cole a URL em um novo navegador."
+msgstr ""
+"Se você está clicano no link e o mesmo não está funcionando, por favor copie "
+"e cole a URL em um novo navegador."
 
 #: templates/registration/password_reset_email.html:11
 msgid "Sincerely"
@@ -290,4 +296,6 @@ msgid ""
 "Forgot your password? Enter your email in the form below and we'll send you "
 "instructions for\n"
 "        creating a new one."
-msgstr "Esqueceu sua senha? Digite seu e-mail no campo abaixo e vamos te enviar instruções para criar um nova."
+msgstr ""
+"Esqueceu sua senha? Digite seu e-mail no campo abaixo e vamos te enviar "
+"instruções para criar um nova."
