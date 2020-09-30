@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-12 10:12-0300\n"
+"POT-Creation-Date: 2020-09-30 10:42-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,125 +17,216 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: apps/api_ditec/views.py:30 apps/api_ditec/views.py:50
-#: apps/api_ditec/views.py:70 apps/api_ditec/views.py:90
-msgid "It is necessary to pass search"
-msgstr ""
-
-#: apps/api_ditec/views.py:105 apps/api_ditec/views.py:121
+#: apps/api_ditec/views.py:84 apps/api_ditec/views.py:99
 msgid "Error not found results"
 msgstr ""
 
-#: apps/authentication/models.py:8
+#: apps/api_ditec/views.py:101
+msgid "It is necessary to pass search"
+msgstr "É necessário passar passar uma busca"
+
+#: apps/api_ditec/views.py:123
+msgid "Videos sessions not found!"
+msgstr "Vídeos da sessão não encontrados!"
+
+#: apps/api_ditec/views.py:145
+msgid "File video not found!"
+msgstr "Arquivos não encontrados!"
+
+#: apps/authentication/models.py:9
 msgid "editor"
-msgstr ""
+msgstr "editor"
 
-#: apps/authentication/models.py:15
+#: apps/authentication/models.py:11
+msgid "email address"
+msgstr "endereço de email"
+
+#: apps/authentication/models.py:17
 msgid "user"
-msgstr ""
+msgstr "usuário"
 
-#: apps/authentication/models.py:16
+#: apps/authentication/models.py:18
 msgid "users"
-msgstr ""
-
-#: apps/plenary_session/models.py:7
-msgid "created"
-msgstr ""
+msgstr "usuários"
 
 #: apps/plenary_session/models.py:9
+msgid "created"
+msgstr "criado"
+
+#: apps/plenary_session/models.py:11
 msgid "modified"
-msgstr ""
-
-#: apps/plenary_session/models.py:22
-msgid "plenary"
-msgstr ""
-
-#: apps/plenary_session/models.py:23
-msgid "virtual session"
-msgstr ""
+msgstr "modificado"
 
 #: apps/plenary_session/models.py:24
-msgid "presential session"
-msgstr ""
+msgid "plenary"
+msgstr "plenário"
+
+#: apps/plenary_session/models.py:25
+msgid "virtual session"
+msgstr "sessão virtual"
 
 #: apps/plenary_session/models.py:26
-msgid "pré session"
-msgstr ""
-
-#: apps/plenary_session/models.py:27
-msgid "started session"
-msgstr ""
+msgid "presential session"
+msgstr "sessão presencial"
 
 #: apps/plenary_session/models.py:28
-msgid "started votation"
-msgstr ""
+msgid "pré session"
+msgstr "pré sessão"
 
 #: apps/plenary_session/models.py:29
-msgid "next topic"
-msgstr ""
+msgid "started session"
+msgstr "sessão iniciada"
 
 #: apps/plenary_session/models.py:30
-msgid "closed session"
-msgstr ""
+msgid "started votation"
+msgstr "votação iniciada"
 
-#: apps/plenary_session/models.py:33
+#: apps/plenary_session/models.py:31
+msgid "next topic"
+msgstr "próximo tópico"
+
+#: apps/plenary_session/models.py:32
+msgid "closed session"
+msgstr "sessão fechada"
+
+#: apps/plenary_session/models.py:35
 msgid "location"
 msgstr "localização"
 
-#: apps/plenary_session/models.py:35
+#: apps/plenary_session/models.py:37
 msgid "date"
-msgstr ""
+msgstr "data"
 
-#: apps/plenary_session/models.py:36
-msgid "type_session"
-msgstr ""
+#: apps/plenary_session/models.py:38
+msgid "type session"
+msgstr "tipo de sessão"
 
-#: apps/plenary_session/models.py:39
-msgid "situation_session"
-msgstr ""
+#: apps/plenary_session/models.py:41
+msgid "situation session"
+msgstr "situação da sessão"
 
-#: apps/plenary_session/models.py:42
+#: apps/plenary_session/models.py:44
 msgid "resume"
-msgstr ""
+msgstr "resumo"
 
-#: apps/plenary_session/models.py:45 apps/plenary_session/models.py:66
+#: apps/plenary_session/models.py:45
+msgid "enable"
+msgstr "habilitado"
+
+#: apps/plenary_session/models.py:47
+msgid "id session dados abertos"
+msgstr "id sessão dados abertos"
+
+#: apps/plenary_session/models.py:53 apps/plenary_session/models.py:79
+#: apps/plenary_session/models.py:136
 msgid "plenary session"
-msgstr ""
-
-#: apps/plenary_session/models.py:46
-msgid "plenary sessions"
-msgstr ""
+msgstr "sessão plenária"
 
 #: apps/plenary_session/models.py:54
+msgid "plenary sessions"
+msgstr "sessões plenárias"
+
+#: apps/plenary_session/models.py:60 apps/plenary_session/serializers.py:18
+msgid "Only session enable can have resume"
+msgstr "Somente sessões habilitadas podem ter resumo"
+
+#: apps/plenary_session/models.py:68
 msgid "published"
-msgstr ""
+msgstr "publicado"
 
-#: apps/plenary_session/models.py:55
+#: apps/plenary_session/models.py:69
 msgid "inactive"
-msgstr ""
+msgstr "inativo"
 
-#: apps/plenary_session/models.py:58
+#: apps/plenary_session/models.py:72
 msgid "state"
-msgstr ""
+msgstr "estado"
 
-#: apps/plenary_session/models.py:62
-msgid "content"
-msgstr ""
-
-#: apps/plenary_session/models.py:70
+#: apps/plenary_session/models.py:83
 msgid "author"
-msgstr ""
+msgstr "autor"
 
-#: apps/plenary_session/models.py:73
+#: apps/plenary_session/models.py:84
+msgid "content"
+msgstr "conteúdo"
+
+#: apps/plenary_session/models.py:86
+msgid "tweet id"
+msgstr "tweet id"
+
+#: apps/plenary_session/models.py:89
+msgid "image"
+msgstr "imagem"
+
+#: apps/plenary_session/models.py:92 apps/plenary_session/models.py:137
+msgid "title"
+msgstr "título"
+
+#: apps/plenary_session/models.py:104
 msgid "publication"
-msgstr ""
+msgstr "publicação"
 
-#: apps/plenary_session/models.py:74
+#: apps/plenary_session/models.py:105
 msgid "publications"
-msgstr ""
+msgstr "publicações"
 
-#: templates/registration/password_reset_complete.html:4
-#: templates/registration/password_reset_complete.html:9
+#: apps/plenary_session/models.py:111 apps/plenary_session/serializers.py:43
+msgid "Only session enable can have publication"
+msgstr "Somente sessões habilitadasa podem ter publicação"
+
+#: apps/plenary_session/models.py:116 apps/plenary_session/serializers.py:36
+msgid "Content or tweet_id or image are required"
+msgstr "Conteúdo ou tweet_id ou imagem é necessário!"
+
+#: apps/plenary_session/models.py:124
+msgid "News"
+msgstr "Notícias"
+
+#: apps/plenary_session/models.py:125
+msgid "TV Câmara"
+msgstr "TV Câmara"
+
+#: apps/plenary_session/models.py:126
+msgid "Radio Câmara"
+msgstr "Radio Câmara"
+
+#: apps/plenary_session/models.py:127
+msgid "Agencia Câmara"
+msgstr "Agencia Câmara"
+
+#: apps/plenary_session/models.py:130
+msgid "content type"
+msgstr "tipo de conteúdo"
+
+#: apps/plenary_session/models.py:138
+msgid "url"
+msgstr "url"
+
+#: apps/plenary_session/models.py:140
+msgid "id saved content"
+msgstr "id conteúdo salvo"
+
+#: apps/plenary_session/models.py:143
+msgid "saved content"
+msgstr "conteúdo salvo"
+
+#: apps/plenary_session/models.py:144
+msgid "saved contents"
+msgstr "conteúdos salvos"
+
+#: apps/plenary_session/serializers.py:39
+msgid "{} are required in json object"
+msgstr "{} é necessário no objeto json"
+
+#: linguagemsimples/utils/scrape.py:46
+msgid "Invalid url information"
+msgstr "Url informada inválida"
+
+#: linguagemsimples/utils/scrape.py:56
+msgid "Error parser file video"
+msgstr "Error ao realizar parser do arquivo de vídeo"
+
+#: templates/registration/password_reset_complete.html:5
 #: templates/registration/password_reset_confirm.html:4
 #: templates/registration/password_reset_done.html:4
 #: templates/registration/password_reset_done.html:9
@@ -143,27 +234,26 @@ msgstr ""
 #: templates/registration/password_reset_form.html:9
 #: templates/registration/password_reset_form.html:19
 msgid "Reset password"
-msgstr ""
+msgstr "Resetar senha"
 
-#: templates/registration/password_reset_complete.html:11
-msgid ""
-"\n"
-"        Your password has been set. You may go ahead and sign in now.\n"
-"        "
-msgstr ""
+#: templates/registration/password_reset_complete.html:7
+#, fuzzy
+#| msgid "Your password has been set. You may go ahead and sign in now.\n"
+msgid "Your password has been set. You may go ahead and sign in now."
+msgstr "Sua senha foi definida. Você pode ir em frente e fazer login agora.\n"
 
 #: templates/registration/password_reset_confirm.html:7
 #: templates/registration/password_reset_confirm.html:15
 msgid "New password"
-msgstr ""
+msgstr "Nova senha"
 
 #: templates/registration/password_reset_confirm.html:17
 msgid "Confirm password:"
-msgstr ""
+msgstr "Confirme a senha:"
 
 #: templates/registration/password_reset_confirm.html:19
 msgid "Set password"
-msgstr ""
+msgstr "Definir senha"
 
 #: templates/registration/password_reset_done.html:11
 msgid ""
@@ -173,14 +263,20 @@ msgid ""
 "        You should receive them shortly.\n"
 "        "
 msgstr ""
+"\n"
+" Enviamos por e-mail instruções para definir sua senha, se existir uma conta "
+"com o e-mail que você digitou.\n"
+" Você deve recebê-los em breve."
 
 #: templates/registration/password_reset_email.html:3
 #, python-format
 msgid ""
-"To initiate the password reset process for your %(user.get_username)s "
-"Estúdio Acompanhe Account,\n"
+"To initiate the password reset process for your %(user_name)s Estúdio "
+"Acompanhe Account,\n"
 "click the link below:"
 msgstr ""
+"Para iniciar o processo de resete de senha do seu usuário %(user_name)s no "
+"Estúdio Acompanhe, clique no link abaixo:"
 
 #: templates/registration/password_reset_email.html:8
 msgid ""
@@ -188,6 +284,8 @@ msgid ""
 "new browser\n"
 "window instead."
 msgstr ""
+"Se você está clicano no link e o mesmo não está funcionando, por favor copie "
+"e cole a URL em um novo navegador."
 
 #: templates/registration/password_reset_email.html:11
 msgid "Sincerely"
@@ -199,3 +297,5 @@ msgid ""
 "instructions for\n"
 "        creating a new one."
 msgstr ""
+"Esqueceu sua senha? Digite seu e-mail no campo abaixo e vamos te enviar "
+"instruções para criar um nova."
