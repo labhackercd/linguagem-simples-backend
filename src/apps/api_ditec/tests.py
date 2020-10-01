@@ -11,6 +11,7 @@ from django.conf import settings
 from .mock_site_acompanhe import HTML_SCRAPE, HTML_FILE_VIDEO
 from bs4 import BeautifulSoup
 from rest_framework.exceptions import NotFound, ParseError
+from django.utils.translation import gettext_lazy as _
 
 
 @pytest.fixture
@@ -102,7 +103,7 @@ def test_search_news_without_word(api_client, get_or_create_token):
         get_or_create_token))
     response = api_client.get(path)
 
-    assert response.json() == {'error': 'It is necessary to pass search'}
+    assert response.json() == {'error': _('It is necessary to pass search')}
     assert len(responses.calls) == 0
 
 
@@ -176,7 +177,7 @@ def test_search_radioagency_without_word(api_client, get_or_create_token):
         get_or_create_token))
     response = api_client.get(path)
 
-    assert response.json() == {'error': 'It is necessary to pass search'}
+    assert response.json() == {'error': _('It is necessary to pass search')}
     assert len(responses.calls) == 0
 
 
@@ -212,7 +213,7 @@ def test_not_found_tvcamara(api_client, get_or_create_token):
         get_or_create_token))
     response = api_client.get(path)
 
-    assert response.json() == {'error': 'Error not found results'}
+    assert response.json() == {'error': _('Error not found results')}
 
     assert len(responses.calls) == 1
     assert responses.calls[0].request.url == url
@@ -250,7 +251,7 @@ def test_search_tvcamara_without_word(api_client, get_or_create_token):
         get_or_create_token))
     response = api_client.get(path)
 
-    assert response.json() == {'error': 'It is necessary to pass search'}
+    assert response.json() == {'error': _('It is necessary to pass search')}
     assert len(responses.calls) == 0
 
 
@@ -317,7 +318,7 @@ def test_get_filter_subjects_without_json(api_client, get_or_create_token):
 
     response = get_filter_subjects('word', path)
 
-    assert response == {'error': 'Error not found results'}
+    assert response == {'error': _('Error not found results')}
 
     assert len(responses.calls) == 1
     assert responses.calls[0].request.url == settings.API_DITEC + \
@@ -356,7 +357,7 @@ def test_not_found_radiocamara(api_client, get_or_create_token):
         get_or_create_token))
     response = api_client.get(path)
 
-    assert response.json() == {'error': 'Error not found results'}
+    assert response.json() == {'error': _('Error not found results')}
 
     assert len(responses.calls) == 1
     assert responses.calls[0].request.url == url
@@ -394,7 +395,7 @@ def test_search_radiocamara_without_word(api_client, get_or_create_token):
         get_or_create_token))
     response = api_client.get(path)
 
-    assert response.json() == {'error': 'It is necessary to pass search'}
+    assert response.json() == {'error': _('It is necessary to pass search')}
     assert len(responses.calls) == 0
 
 
@@ -435,7 +436,7 @@ def test_video_session_dont_exist(api_client, get_or_create_token):
 
     assert response.status_code == 200
     assert len(responses.calls) == 1
-    assert response.json() == {'error': 'Videos sessions not found!'}
+    assert response.json() == {'error': _('Videos sessions not found!')}
 
 
 @responses.activate
@@ -528,14 +529,14 @@ def test_file_video_invalid_data(api_client, get_or_create_token):
     data = {'': ''}
     response = api_client.post(path, data=data)
 
-    assert response.json() == {'url': ['Este campo é obrigatório.']}  # NOQA
+    assert response.json() == {'url': ['Este campo é obrigatório.']}
     assert len(responses.calls) == 0
 
 
 @pytest.mark.django_db
 @responses.activate
 def test_file_video_url_not_found(api_client, get_or_create_token):
-    url = 'https://www.camara.leg.br/evento-legislativo/invalid_url'  # NOQA
+    url = 'https://www.camara.leg.br/evento-legislativo/invalid_url'
     responses.add(responses.GET,
                   url,
                   body='',
@@ -548,7 +549,7 @@ def test_file_video_url_not_found(api_client, get_or_create_token):
     data = {'url': url}
     response = api_client.post(path, data=data)
 
-    assert response.json() == {'error': 'File video not found!'}  # NOQA
+    assert response.json() == {'error': _('File video not found!')}
     assert len(responses.calls) == 1
     assert responses.calls[0].request.url == url
 
@@ -577,7 +578,7 @@ def test_invalid_url_get_file_video():
 
     assert excinfo.typename == 'NotFound'
     assert excinfo.value.status_code == 404
-    assert excinfo.value.detail == 'Invalid url information'
+    assert excinfo.value.detail == _('Invalid url information')
 
 
 @responses.activate
@@ -595,4 +596,4 @@ def test_invalid_url_scraping_file_video():
 
     assert excinfo.typename == 'ParseError'
     assert excinfo.value.status_code == 400
-    assert excinfo.value.detail == 'Error parser file video'
+    assert excinfo.value.detail == _('Error parser file video')
