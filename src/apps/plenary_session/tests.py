@@ -8,6 +8,7 @@ from django.urls import reverse
 import json
 from django.db import IntegrityError
 from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
 
 from .models import PlenarySession, Publication, SavedContent
 
@@ -106,7 +107,7 @@ def test_plenary_session_disable_resume_error():
         plenary_session = mixer.blend(
             PlenarySession, enable=False, resume="ABC")
         plenary_session.full_clean()
-    assert 'Only session enable can have resume' in str(excinfo.value)
+    assert str(_('Only session enable can have resume')) in str(excinfo.value)
 
 
 @pytest.mark.django_db
@@ -177,7 +178,7 @@ def test_session_keyerror_resume(api_client, get_or_create_token):
 
     assert response.status_code == 400
     assert request['non_field_errors'] == [
-        "Only session enable can have resume"]
+        _("Only session enable can have resume")]
 
 
 @pytest.mark.django_db
@@ -238,7 +239,7 @@ def test_publication_validation_error():
         session = mixer.blend(PlenarySession, enable=True)
         publication = Publication.objects.create(author=user, session=session)
         publication.clean()
-    assert 'Content or tweet_id or image are required' in str(excinfo.value)
+    assert str(_('Content or tweet_id or image are required')) in str(excinfo.value)   # NOQA
 
 
 @pytest.mark.django_db
@@ -248,7 +249,7 @@ def test_publication_validation_error_disable_session():
         session = mixer.blend(PlenarySession, enable=False)
         publication = Publication.objects.create(author=user, session=session)
         publication.clean()
-    assert 'Only session enable can have publication' in str(excinfo.value)
+    assert str(_('Only session enable can have publication')) in str(excinfo.value)  # NOQA
 
 
 @pytest.mark.django_db
@@ -297,7 +298,7 @@ def test_publication_validate_required_fields(api_client, get_or_create_token):
     request = json.loads(response.content)
     assert response.status_code == 400
     assert request['non_field_errors'] == [
-        'Content or tweet_id or image are required']
+        _('Content or tweet_id or image are required')]
 
 
 @pytest.mark.django_db
@@ -316,7 +317,7 @@ def test_publication_keyerror_disable_session(api_client, get_or_create_token):
     request = json.loads(response.content)
     assert response.status_code == 400
     assert request['non_field_errors'] == [
-        "Only session enable can have publication"]
+        _("Only session enable can have publication")]
 
 
 @pytest.mark.django_db
