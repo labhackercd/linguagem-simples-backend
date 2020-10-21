@@ -12,6 +12,8 @@
   </a>
 </p>
 
+<a href="https://github.com/labhackercd/linguagem-simples-backend/#About-the-project"> Click here to see the English version </a>
+
 ## Sobre o projeto
 
 <center><img src="https://media.giphy.com/media/GDzLnVXvO67Q0hTloy/giphy.gif"></center>
@@ -64,6 +66,7 @@ sudo docker-compose exec backend sh -c "cd src/ && pytest --cov-report term-miss
 - É possível verificar como estão os status do serviço que o projeto Linguagem simples depende no seguinte link:
   - http://localhost.com/health_system/?wt=key
 * Lembrando que é preciso configurar na variável **WATCHMAN_TOKENS** do arquivo **settings.py** qual será o token necessário para acessar essa página
+
 ![](https://raw.githubusercontent.com/wiki/labhackercd/linguagem-simples/images/README/health_system.png)
 
 **A API neste momento já vai estar rodando na porta 8000 do localhost.**
@@ -128,6 +131,13 @@ docker-compose up dev
 ```bash
 sudo docker-compose exec backend sh -c "cd src/ && pytest --cov-report term-missing --cov=apps"
 ``` 
+
+## Service status report 
+- It is possible to verify the status of services the Linguagem Simples' project relies upon by navigating to the following link:
+  - http://localhost.com/health_system/?wt=key
+  * Just a reminder that it is necessary to inform the token needed to access the page by changing the **WATCHMAN_TOKENS** variable of the **settings.py** file
+  
+  ![](https://raw.githubusercontent.com/wiki/labhackercd/linguagem-simples/images/README/health_system.png)
 
 ## Documentation
 
